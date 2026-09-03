@@ -34,7 +34,7 @@ import sys
 #: The PyPI distribution + ``mcp`` extra to resolve, and the console script to
 #: run. ``uvx --from "<PACKAGE>" <CONSOLE_SCRIPT>`` fetches the package (with the
 #: extra) into an ephemeral environment and runs the script.
-PACKAGE = "notebooklm-py[mcp]"
+PACKAGE = "notebooklm-api[mcp]"
 CONSOLE_SCRIPT = "notebooklm-mcp"
 
 
