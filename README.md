@@ -1,13 +1,14 @@
-# 🚀 open-notebooklm — Unofficial Google NotebookLM API, Python SDK, CLI & MCP Server for Gemini Notebook Automation
+<!-- SEO Meta: Google NotebookLM API, Gemini Notebook Python SDK, NotebookLM CLI, NotebookLM MCP Server, NotebookLM automation, NotebookLM reverse engineering, Agentic RAG, Zero-token LLM memory, Audio Overview podcast generator, AI slide deck generator, FastMCP NotebookLM, batchexecute, Google AI studio alternative -->
 
+# 🚀 open-notebooklm — Unofficial Google NotebookLM API, Python SDK, CLI & MCP Server for Gemini Notebook Automation
 
 <h3 align="center">
   The #1 Open-Source Google NotebookLM API, Python SDK, CLI & MCP Server<br>
-  for Gemini Notebook Automation, Agentic RAG & Content Generation
+  for Gemini Notebook Automation, Agentic RAG, LLM Long-Term Memory & Content Generation
 </h3>
 
 <p align="center">
-  <em>Automate Google NotebookLM · Generate AI podcasts, videos & slides · Agentic RAG & LLM memory · Zero-token knowledge synthesis</em>
+  <em>Automate Google NotebookLM & Gemini Notebook · Generate AI Podcasts, Video Overviews & Slide Decks · Grounded Agentic RAG & LLM Memory · Zero-Token Document Synthesis</em>
 </p>
 
 <p align="center">
@@ -387,13 +388,15 @@ notebooklm agent show codex                # print bundled Codex instructions
 
 If you are looking for any of the following solutions, **open-notebooklm** provides a drop-in implementation:
 
-- **NotebookLM Python API & SDK**: Full async client (`NotebookLMClient`) for creating notebooks, uploading PDFs/URLs/YouTube videos, running grounded chats, and downloading generated audio/video.
-- **NotebookLM CLI**: Command-line tool to automate Google NotebookLM pipelines, batch operations, shell scripting, and cron tasks.
-- **Model Context Protocol (MCP) Server**: Official MCP stdio/SSE server connecting NotebookLM as a grounded knowledge and long-term memory layer for Claude Desktop, Claude Code, OpenAI Codex, Antigravity, and Cursor.
-- **AI Agent Memory & Zero-Token RAG**: Grounded retrieval-augmented generation where Gemini handles dense source reasoning at zero API token cost while returning inline citations.
-- **Programmatic Audio / Podcast Generation**: Automate generation and batch download of Google NotebookLM Deep Dive audio discussions in 50+ languages.
-- **Video Overviews, Slide Decks & Quizzes**: Automated extraction of studio artifacts including video presentations, PowerPoint (`.pptx`), mind maps, flashcards, and Anki-compatible quiz exports.
-- **Gemini Notebook Automation**: 100% compatible with Google's rebranded Gemini Notebook ecosystem across Web RPC (`batchexecute`) and mobile Android gRPC transports.
+- **NotebookLM Python API & SDK**: Modern async Python client (`NotebookLMClient`) for creating notebooks, uploading PDFs/URLs/YouTube videos, running grounded chats, and downloading generated audio/video.
+- **NotebookLM CLI**: Production command-line tool to automate Google NotebookLM pipelines, batch operations, shell scripting, CI/CD, and cron tasks.
+- **Model Context Protocol (MCP) Server**: Official MCP stdio and SSE server connecting NotebookLM as a grounded knowledge base and persistent memory layer for Claude Desktop, Claude Code, OpenAI Codex, Antigravity, Cursor, and ChatGPT.
+- **AI Agent Memory & Zero-Token RAG**: Grounded retrieval-augmented generation where Gemini processes dense document reasoning at zero LLM token cost while returning inline citations.
+- **Programmatic Audio Overview & AI Podcast Generator**: Automate generation and batch download of Google NotebookLM Deep Dive audio discussions in 50+ languages with custom prompts and personas.
+- **AI Video Overviews, Slide Decks & Quizzes**: Automated extraction of studio artifacts including video presentations, editable PowerPoint slide decks (`.pptx`), mind maps, flashcards, and Anki-compatible quiz exports.
+- **Gemini Notebook Automation & Reverse-Engineered API**: 100% compatible with Google's rebranded Gemini Notebook ecosystem across Web RPC (`batchexecute`) and mobile Android gRPC transports.
+- **Headless NotebookLM Authentication**: Automate authentication via Playwright, local browser cookies, or Android master token bearer authentication for headless servers, Docker containers, and CI pipelines.
+- **NotebookLM Alternative / API Wrapper**: Open-source programmatic interface replacing manual UI interactions with scripted workflows and agentic tool use.
 
 ---
 
