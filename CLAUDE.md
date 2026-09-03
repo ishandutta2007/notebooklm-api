@@ -4,7 +4,7 @@ Guidance for Claude Code working in this repo. Also follow the file/naming conve
 
 ## Project Overview
 
-`open-notebooklm` (`notebooklm-py` on PyPI) is an unofficial open-source **async** Python SDK for Google NotebookLM / Gemini Notebook. It drives Google's internal `batchexecute` RPC protocol to automate notebooks, sources, AI querying, and studio artifacts (podcasts, videos, quizzes, …).
+`open-notebooklm` (`notebooklm-api` on PyPI) is an unofficial open-source **async** Python SDK for Google NotebookLM / Gemini Notebook. It drives Google's internal `batchexecute` RPC protocol to automate notebooks, sources, AI querying, and studio artifacts (podcasts, videos, quizzes, …).
 
 **Critical constraint:** the obfuscated RPC method IDs in `src/notebooklm/rpc/types.py` are undocumented and can break whenever Google changes them — the #1 breakage class.
 
