@@ -49,7 +49,7 @@ SERVER_KEY = "notebooklm"
 
 #: PyPI distribution + ``mcp`` extra, and the console script ``uvx`` runs. Kept
 #: in lockstep with ``desktop-extension/run_server.py`` (the .mcpb launcher).
-_PACKAGE_SPEC = "notebooklm-py[mcp]"
+_PACKAGE_SPEC = "notebooklm-api[mcp]"
 _CONSOLE_SCRIPT = "notebooklm-mcp"
 
 
