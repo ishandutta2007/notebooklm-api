@@ -123,7 +123,7 @@ def test_manifest_describes_this_package_not_the_competitor() -> None:
     # Name is OUR server, not the competitor's distribution.
     assert data["name"] == "notebooklm-mcp"
     blob = json.dumps(data).lower()
-    assert "notebooklm-py" in blob
+    assert "notebooklm-api" in blob
     assert "notebooklm-mcp-cli" not in blob
 
 
@@ -201,7 +201,7 @@ def test_build_command_forwards_argv() -> None:
     assert cmd == [
         "/usr/bin/uvx",
         "--from",
-        "notebooklm-py[mcp]",
+        "notebooklm-api[mcp]",
         "notebooklm-mcp",
         "--transport",
         "http",
@@ -211,7 +211,7 @@ def test_build_command_forwards_argv() -> None:
 def test_build_command_no_extra_argv() -> None:
     run_server = _load_run_server()
     cmd = run_server.build_command("/opt/uvx", [])
-    assert cmd == ["/opt/uvx", "--from", "notebooklm-py[mcp]", "notebooklm-mcp"]
+    assert cmd == ["/opt/uvx", "--from", "notebooklm-api[mcp]", "notebooklm-mcp"]
 
 
 def test_is_prerelease() -> None:
@@ -241,7 +241,7 @@ def test_build_command_pins_prerelease_version() -> None:
     assert cmd == [
         "/usr/bin/uvx",
         "--from",
-        "notebooklm-py[mcp]==0.8.0a1",
+        "notebooklm-api[mcp]==0.8.0a1",
         "notebooklm-mcp",
         "--transport",
         "http",
@@ -352,7 +352,7 @@ def test_run_server_does_not_print_to_stdout_on_success_path(
     assert "notebooklm-mcp" in cmd
     assert cmd[-2:] == ["--profile", "x"]
     from_idx = cmd.index("--from")
-    assert cmd[from_idx + 1].startswith("notebooklm-py[mcp]")
+    assert cmd[from_idx + 1].startswith("notebooklm-api[mcp]")
     # stdio is passed through cleanly (critical for JSON-RPC).
     import sys
 
