@@ -81,7 +81,7 @@ dev = [
     "pytest-rerunfailures>=14.0,<17",
     "pytest-timeout>=2.3.0,<3",
     "pytest-xdist>=3.6.0,<4",
-    "python-dotenv>=1.0.0,<2",
+    "python-dotenv>=1.2.3,<2",
     "mypy>=1.0.0,<3",
     "pre-commit>=4.5.1,<5",
     "ruff==0.16.1",
