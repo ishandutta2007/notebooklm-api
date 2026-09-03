@@ -227,7 +227,7 @@ def install(scope: str, target_name: str, dry_run: bool, no_clobber: bool, force
     if content is None:
         console.print("[red]Error:[/red] Skill source not found in package data.")
         console.print("This may indicate an incomplete or corrupted installation.")
-        console.print("Try reinstalling: pip install --force-reinstall notebooklm-py")
+        console.print("Try reinstalling: pip install --force-reinstall notebooklm-api")
         exit_with_code(1)
 
     version = get_package_version()
@@ -523,7 +523,7 @@ def package(output: str | None, force: bool, json_output: bool):
         output_error(
             "Skill source not found in package data. This may indicate an "
             "incomplete or corrupted installation. Try reinstalling: "
-            "pip install --force-reinstall notebooklm-py",
+            "pip install --force-reinstall notebooklm-api",
             code="SKILL_SOURCE_MISSING",
             json_output=json_output,
             exit_code=1,
