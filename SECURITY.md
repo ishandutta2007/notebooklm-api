@@ -10,8 +10,7 @@ Only the latest release track receives security updates. Earlier versions are de
 
 | Version Track | Supported Status | Notes |
 | :--- | :--- | :--- |
-| **0.8.x** | :white_check_mark: Supported | Active release line; receives vulnerability fixes and security patches. |
-| **< 0.8.0** | :x: Unsupported | Legacy releases predating current storage and security architecture. |
+| **0.1.x** | :white_check_mark: Supported | Active release line; receives vulnerability fixes and security patches. |
 
 ---
 
