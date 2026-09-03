@@ -1,16 +1,16 @@
-# 🚀 open-notebooklm — Open-Source Google NotebookLM & Gemini Notebook Automation
+# 🚀 open-notebooklm — Unofficial Google NotebookLM API, Python SDK, CLI & MCP Server for Gemini Notebook Automation
 
 <p align="center">
-  <img src="notebooklm-py.png" alt="open-notebooklm — Open-Source Google NotebookLM Python SDK, CLI, MCP Server & AI Agent Toolkit" width="160">
+  <img src="notebooklm-py.png" alt="open-notebooklm — Open-Source Google NotebookLM API Python SDK, CLI, MCP Server & AI Agent Toolkit" width="160">
 </p>
 
 <h3 align="center">
-  The #1 Open-Source Python SDK, CLI, MCP Server & AI Agent Toolkit<br>
-  for Google NotebookLM / Gemini Notebook Automation
+  The #1 Open-Source Google NotebookLM API, Python SDK, CLI & MCP Server<br>
+  for Gemini Notebook Automation, Agentic RAG & Content Generation
 </h3>
 
 <p align="center">
-  <em>Automate notebooks · Generate podcasts, videos & slides · Build AI agent memory · Zero-token RAG</em>
+  <em>Automate Google NotebookLM · Generate AI podcasts, videos & slides · Agentic RAG & LLM memory · Zero-token knowledge synthesis</em>
 </p>
 
 <p align="center">
@@ -18,6 +18,8 @@
   <a href="https://pypi.org/project/notebooklm-py/"><img src="https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue?style=for-the-badge" alt="Python 3.10 3.11 3.12 3.13 3.14"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License: MIT"></a>
   <a href="https://github.com/ishandutta2007/open-notebooklm/stargazers"><img src="https://img.shields.io/github/stars/ishandutta2007/open-notebooklm?style=for-the-badge&color=orange" alt="GitHub Stars"></a>
+  <a href="https://pepy.tech/project/notebooklm-py"><img src="https://img.shields.io/pepy/dt/notebooklm-py?style=for-the-badge&color=green" alt="PyPI Downloads"></a>
+  <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-Compatible-purple?style=for-the-badge" alt="Model Context Protocol Compatible"></a>
 </p>
 
 <p align="center">
@@ -26,9 +28,9 @@
 
 ---
 
-> ⚠️ **Unofficial & Community-Driven** — **open-notebooklm** is **not affiliated with, endorsed by, or maintained by Google**. It uses undocumented Google APIs that can change without notice. Best for prototypes, research, personal projects, and AI agent workflows. See [Troubleshooting](docs/troubleshooting.md) for debugging tips.
+> ⚠️ **Unofficial & Community-Driven** — **open-notebooklm** is **not affiliated with, endorsed by, or maintained by Google**. It provides an unofficial API wrapper for Google NotebookLM (Gemini Notebook) using reverse-engineered web and mobile endpoints. Best for prototypes, research, personal projects, and AI agent workflows. See [Troubleshooting](docs/troubleshooting.md) for debugging tips.
 
-> ℹ️ **Gemini Notebook Rebrand (July 2026):** Google rebranded **NotebookLM** → **[Gemini Notebook](https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/)**. Same product, same API surface — **open-notebooklm** works unchanged with both names.
+> ℹ️ **Gemini Notebook Rebrand (July 2026):** Google rebranded **NotebookLM** → **[Gemini Notebook](https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/)**. Same product, same API surface — **open-notebooklm** works seamlessly with both Google NotebookLM and Gemini Notebook.
 
 ---
 
@@ -37,17 +39,18 @@
 - [🌟 Why open-notebooklm?](#-why-open-notebooklm)
 - [✨ Feature Matrix](#-feature-matrix)
   - [📂 Notebook & Source Management](#-notebook--source-management)
-  - [🎙️ Content Generation & Studio Artifacts](#️-content-generation--studio-artifacts)
+  - [🎙️ Content Generation & Studio Artifacts (Audio, Video, Slides, Quizzes)](#️-content-generation--studio-artifacts-audio-video-slides-quizzes)
   - [🔮 Beyond the Web UI](#-beyond-the-web-ui)
 - [📊 Google NotebookLM Pricing & Account Tiers](#-google-notebooklm-pricing--account-tiers)
-- [🏗️ Architecture & Integration Modes](#️-architecture--integration-modes)
+- [🏗️ Architecture & Integration Modes (Python SDK, CLI, MCP Server, REST API)](#️-architecture--integration-modes-python-sdk-cli-mcp-server-rest-api)
 - [📦 Installation & Quick Start](#-installation--quick-start)
   - [🖥️ CLI Setup](#️-cli-setup)
   - [🔐 Authentication & Access](#-authentication--access)
-  - [🐍 Python SDK](#-python-sdk)
-  - [🔌 MCP & AI Agent Integration](#-mcp--ai-agent-integration)
+  - [🐍 Python SDK (Async Client)](#-python-sdk-async-client)
+  - [🔌 MCP & AI Agent Integration (Claude, Codex, Antigravity)](#-mcp--ai-agent-integration-claude-codex-antigravity)
 - [⌨️ CLI Workflow Cheat Sheet](#️-cli-workflow-cheat-sheet)
 - [💡 Use Cases & Recipes — What People Build with open-notebooklm](#-use-cases--recipes--what-people-build-with-open-notebooklm)
+- [🔍 Key Capabilities & Search Terms](#-key-capabilities--search-terms)
 - [📚 Documentation Index](#-documentation-index)
 - [📜 License](#-license)
 
@@ -86,7 +89,7 @@ Google NotebookLM (Gemini Notebook) is a **grounded** AI engine: Gemini reads *y
 | **Research** | Web & Drive research agents (fast / deep modes) with auto-import of discovered sources |
 | **Sharing** | Public/private links, user permissions (viewer/editor), view-level control |
 
-### 🎙️ Content Generation & Studio Artifacts
+### 🎙️ Content Generation & Studio Artifacts (Audio, Video, Slides, Quizzes)
 
 Every artifact type the NotebookLM Studio supports, exposed programmatically by **open-notebooklm**:
 
@@ -131,7 +134,7 @@ Programmatic, batch, and local-file capabilities that **open-notebooklm** makes 
 
 ---
 
-## 🏗️ Architecture & Integration Modes
+## 🏗️ Architecture & Integration Modes (Python SDK, CLI, MCP Server, REST API)
 
 ```mermaid
 graph TD
@@ -218,7 +221,7 @@ pip install notebooklm-py
 | 🔑 **Master-token auth** (headless, self-healing) | `notebooklm login --master-token --account you@example.com` | Servers, CI/CD, remote MCP connector — mints fresh cookies on demand |
 | 👥 **Multi-account profiles** | `notebooklm profile switch work` | Switch between Google accounts without re-auth |
 
-### 🐍 Python SDK
+### 🐍 Python SDK (Async Client)
 
 ```python
 import asyncio
@@ -251,7 +254,7 @@ async def main():
 asyncio.run(main())
 ```
 
-### 🔌 MCP & AI Agent Integration
+### 🔌 MCP & AI Agent Integration (Claude, Codex, Antigravity)
 
 Connect **open-notebooklm** to Claude Code, Codex, Antigravity, or Claude Desktop:
 
@@ -380,6 +383,20 @@ notebooklm agent show codex                # print bundled Codex instructions
 - **📚 Curriculum builder** — One notebook per topic → bulk-generate podcasts, quizzes, and flashcards.
 - **📰 Scheduled audio briefings** — `auth refresh --quiet` (cron) + `generate audio` → fresh daily podcast feed.
 - **📱 NotebookLM from your phone** — Self-host the [remote MCP connector](docs/mcp-guide.md#remote-deployment-docker--a-tunnel) behind a tunnel → drive **open-notebooklm** from the claude.ai mobile app. *No app-hopping required.*
+
+---
+
+## 🔍 Key Capabilities & Search Terms
+
+If you are looking for any of the following solutions, **open-notebooklm** provides a drop-in implementation:
+
+- **NotebookLM Python API & SDK**: Full async client (`NotebookLMClient`) for creating notebooks, uploading PDFs/URLs/YouTube videos, running grounded chats, and downloading generated audio/video.
+- **NotebookLM CLI**: Command-line tool to automate Google NotebookLM pipelines, batch operations, shell scripting, and cron tasks.
+- **Model Context Protocol (MCP) Server**: Official MCP stdio/SSE server connecting NotebookLM as a grounded knowledge and long-term memory layer for Claude Desktop, Claude Code, OpenAI Codex, Antigravity, and Cursor.
+- **AI Agent Memory & Zero-Token RAG**: Grounded retrieval-augmented generation where Gemini handles dense source reasoning at zero API token cost while returning inline citations.
+- **Programmatic Audio / Podcast Generation**: Automate generation and batch download of Google NotebookLM Deep Dive audio discussions in 50+ languages.
+- **Video Overviews, Slide Decks & Quizzes**: Automated extraction of studio artifacts including video presentations, PowerPoint (`.pptx`), mind maps, flashcards, and Anki-compatible quiz exports.
+- **Gemini Notebook Automation**: 100% compatible with Google's rebranded Gemini Notebook ecosystem across Web RPC (`batchexecute`) and mobile Android gRPC transports.
 
 ---
 
