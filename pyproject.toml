@@ -1,6 +1,6 @@
 [project]
-name = "notebooklm-py"
-version = "0.8.2"
+name = "notebooklm-api"
+version = "0.1.0"
 description = "open-notebooklm — Unofficial open-source Python SDK, CLI & MCP Server for Google NotebookLM / Gemini Notebook automation"
 dynamic = ["readme"]
 requires-python = ">=3.10"
@@ -98,7 +98,7 @@ dev = [
 # `all` deliberately omits the `android`, `cookies`, and `impersonate` extra
 # names. Because `all` includes `dev`, it still resolves the pinned protobuf
 # compiler/runtime solely so CI can reproduce checked-in stubs.
-all = ["notebooklm-py[browser,dev,headless,markdown,mcp,server]"]
+all = ["notebooklm-api[browser,dev,headless,markdown,mcp,server]"]
 
 [project.scripts]
 notebooklm = "notebooklm.notebooklm_cli:main"
