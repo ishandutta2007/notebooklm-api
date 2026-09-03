@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package notebooklm.android.wire.v1;
+
+// Repository-local read overlay for heterogeneous organization member rows.
+// Generated write requests/responses now live in the web-derived canonical
+// package; this decoder remains because collection members are raw UUID bytes
+// while source-label members are nested SourceId messages.
+
+message OrganizationRecordWire {
+  string name = 1;
+  repeated bytes member_ids = 2;
+  string id = 3;
+  string emoji = 4;
+}
+
+message GetLabelsWireResponse {
+  repeated OrganizationRecordWire labels = 1;
+  repeated OrganizationRecordWire collections = 2;
+}

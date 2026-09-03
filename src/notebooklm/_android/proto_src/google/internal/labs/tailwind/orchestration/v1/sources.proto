@@ -1,0 +1,309 @@
+syntax = "proto3";
+
+package google.internal.labs.tailwind.orchestration.v1;
+
+import "google/internal/labs/tailwind/orchestration/v1/read.proto";
+import "google/protobuf/timestamp.proto";
+import "labs/language/tailwind/common/protos/metadata.proto";
+import "labs/language/tailwind/common/protos/provenance.proto";
+
+// Exact-package source-operation closure admitted by source, plus the explicitly
+// web-derived MutateSource signature. Its method/type names follow the current
+// bundle registration; the populated field tags are pinned by successful
+// Android-bearer replay.
+
+message InputSource {
+  SourceId source_id = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+}
+
+message Snippet {
+  string text_snippet = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+}
+
+message MainIdeas {
+  repeated string text_ideas = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+}
+
+message DocumentGuide {
+  // Optional on the wire: populated on a source's first guide response,
+  // omitted on every repeat call.
+  InputSource source = 1; // evidence: docs/android/proto-evidence-ledger.md#document-guide-source-echo
+  Snippet snippet = 2; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+  MainIdeas main_ideas = 3; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+}
+
+message GenerateDocumentGuidesRequest {
+  repeated InputSource sources = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+}
+
+message GenerateDocumentGuidesResponse {
+  repeated DocumentGuide guides = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+}
+
+message TentativeSourceMetadata {
+  string name = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+}
+
+message AddTentativeSourcesRequest {
+  repeated TentativeSourceMetadata tentative_sources_metadata = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+  string project_id = 2; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+  .labs.language.tailwind.common.protos.RequestContext request_context = 3; // evidence: docs/android/file-transfer-evidence.md
+  .labs.language.tailwind.common.protos.Provenance provenance = 4; // evidence: docs/android/file-transfer-evidence.md
+}
+
+message AddTentativeSourcesResponse {
+  repeated Source tentative_sources = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+}
+
+message WebContent {
+  string url = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+  string source_name = 2; // evidence: docs/android/deep-research-evidence.md
+}
+
+message TextContent {
+  string source_name = 1; // evidence: docs/android/deep-research-evidence.md
+  string content = 2; // evidence: docs/android/deep-research-evidence.md
+}
+
+message GoogleDriveContent {
+  string document_id = 1;
+  string mime_type = 2;
+  bool can_download = 3;
+  string source_name = 4;
+}
+
+message VideoContent {
+  string youtube_url = 1;
+}
+
+message UserContent {
+  enum TextContentType {
+    CONTENT_TYPE_UNKNOWN = 0;
+    CONTENT_TYPE_PDF = 1;
+    CONTENT_TYPE_TEXT = 2;
+    CONTENT_TYPE_MARKDOWN = 3;
+    CONTENT_TYPE_AUDIO_TRANSCRIPT = 4;
+    CONTENT_TYPE_EPUB = 5;
+    CONTENT_TYPE_GEMINI_CHAT = 6;
+    CONTENT_TYPE_CSV = 7;
+  }
+
+  GoogleDriveContent google_drive_content = 1;
+  TextContent text_content = 2; // evidence: docs/android/deep-research-evidence.md
+  WebContent web_content = 3; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+  TextContentType text_content_type = 4; // evidence: docs/android/deep-research-evidence.md
+  VideoContent video_content = 8;
+  SourceId tentative_source_id = 9; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+  ExpertIntelligenceContent expert_intelligence_content = 16; // evidence: 1.55.10 Play Books capture (#2302)
+}
+
+// Google Play Books ("Expert Intelligence") add content. Field types are
+// live-captured: provider and field_type are load-bearing (field_type is a
+// double on the wire, wire-type 1). See docs/android/schema.proto.
+message ExpertIntelligenceContent {
+  int32 provider = 1;
+  string content_id = 2;
+  string title = 3;
+  string description = 4;
+  string thumbnail_image_url = 5;
+  double field_type = 6;
+  repeated string authors = 7;
+}
+
+// One title from ListExpertIntelligenceContent. Field numbers are live-captured
+// (#2302); export_reason (7) is absent when the title is exportable.
+message ExpertIntelligenceContentItem {
+  string content_id = 1;
+  int32 provider = 2;
+  string title = 3;
+  string description = 4;
+  string thumbnail_image_url = 5;
+  bool export_disabled = 6;
+  int32 export_reason = 7;
+  repeated string authors = 8;
+  double field_type = 9;
+  google.protobuf.Timestamp updated_timestamp = 10;
+}
+
+message ListExpertIntelligenceContentRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1;
+  int32 source_class = 2; // constant 1 in captures
+}
+
+message ListExpertIntelligenceContentResponse {
+  repeated ExpertIntelligenceContentItem items = 1;
+}
+
+message AddSourcesRequest {
+  repeated UserContent user_content = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+  string project_id = 2; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+  .labs.language.tailwind.common.protos.RequestContext request_context = 3;
+}
+
+message AddSourcesResponse {
+  repeated Source sources = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+}
+
+message DeleteSourcesRequest {
+  repeated SourceId source_ids = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+}
+
+message ChangeTitle {
+  string title = 1;
+}
+
+message SourceMutation {
+  oneof mutation {
+    ChangeTitle change_title = 1;
+  }
+  // Live oneof branches #2/#3 remain unrecovered and therefore undeclared.
+}
+
+message MutateSourceRequest {
+  SourceId source_id = 2;
+  repeated SourceMutation mutations = 3;
+  .labs.language.tailwind.common.protos.RequestContext request_context = 4;
+}
+
+// The web response constructor is a dedicated wrapper around Source at #1.
+message MutateSourceResponse {
+  Source source = 1;
+}
+
+// Web-derived request/response closure for yR9Yof. The route is absent from
+// the APK method table, while the populated tags and empty-success response
+// were pinned by successful Android-bearer replay.
+message CheckSourceFreshnessRequest {
+  SourceId source_id = 2;
+  .labs.language.tailwind.common.protos.RequestContext request_context = 3;
+}
+
+message SourceFreshness {
+  optional bool is_fresh = 2;
+  SourceId source_id = 3;
+}
+
+message CheckSourceFreshnessResponse {
+  SourceFreshness source_freshness = 1;
+}
+
+message RefreshSourceRequest {
+  SourceId source_id = 2; // exact current Web constructor bLb field #2
+  .labs.language.tailwind.common.protos.RequestContext request_context = 3; // exact current Web constructor bLb field #3
+}
+
+message RefreshSourceResponse {
+  Source source = 1; // exact current Web response wrapper field #1
+}
+
+message PlainTextSourceContent {
+  string header = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+  string body = 2; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+}
+
+message LoadSourceRequest {
+  SourceId source_id = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+}
+
+message LoadSourceResponse {
+  Source source = 1; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+  PlainTextSourceContent plain_text = 2; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+  string markdown_string = 3; // evidence: docs/android/proto-evidence-ledger.md#source-field-ledger
+  // Exact TailwindDoc #4 is decoded through the repository-local
+  // WireLoadSourceResponse overlay to avoid the sources.proto <-> chat.proto
+  // import cycle created by chat's InputSource dependency.
+}
+
+message UploadFileRequest {
+  string project_id = 3; // evidence: docs/android/file-transfer-evidence.md
+  .labs.language.tailwind.common.protos.RequestContext request_context = 4; // evidence: docs/android/file-transfer-evidence.md
+  string source_id = 5; // evidence: docs/android/file-transfer-evidence.md
+  .labs.language.tailwind.common.protos.Provenance provenance = 6; // evidence: docs/android/file-transfer-evidence.md
+}
+
+// RetrieveRelevantChunks is absent from the app's eager generated closure but
+// is served by both front doors. The request and response tags below were
+// cross-checked against a successful Web call and live Android bearer calls on
+// 2026-09-01 (docs/android/source-search-evidence.md#wire-layout; #2283).
+message RetrieveRelevantChunksOptions {
+  int32 mode = 1;
+}
+
+message SourceIdFilter {
+  repeated SourceId source_ids = 1;
+}
+
+message RetrieveRelevantChunksRequest {
+  string project_id = 1;
+  string query = 2;
+  RetrieveRelevantChunksOptions options = 4;
+  SourceIdFilter source_filter = 5;
+}
+
+message RelevantChunkText {
+  repeated string parts = 1;
+}
+
+message RelevantChunkContent {
+  RelevantChunkText text = 1;
+}
+
+message RelevantChunkSpan {
+  int32 start = 2;
+  int32 end = 3;
+}
+
+message RelevantChunk {
+  RelevantChunkContent content = 1;
+  int32 rank = 2;
+  repeated RelevantChunkSpan spans = 3;
+}
+
+message SourceRelevantChunks {
+  string source_id = 1;
+  repeated RelevantChunk chunks = 2;
+}
+
+message RetrieveRelevantChunksResponse {
+  repeated SourceRelevantChunks source_chunks = 1;
+}
+
+// ---------------------------------------------------------------------------
+// #2283 transfer family. None of these messages are compiled into the official
+// app; their tag layout is pinned by successful live Android gRPC calls
+// (2026-09-01) and cross-checked against the Web front door, while the
+// conventional type names are inferred from the current Web registrations.
+// ---------------------------------------------------------------------------
+
+message SourceContent {
+  PlainTextSourceContent plain_text = 2; // evidence: docs/android/copy-append-suggestion-evidence.md#appendsource
+}
+
+message AppendSourceRequest {
+  SourceId source_id = 2; // evidence: docs/android/copy-append-suggestion-evidence.md#appendsource
+  SourceContent content = 4; // evidence: docs/android/copy-append-suggestion-evidence.md#appendsource
+}
+
+message CopySourcesAsyncRequest {
+  repeated SourceId source_ids = 3; // evidence: docs/android/copy-append-suggestion-evidence.md#copysourcesasync
+  string target_project_id = 4; // evidence: docs/android/copy-append-suggestion-evidence.md#copysourcesasync
+}
+
+message CopiedSource {
+  SourceId source_id = 1; // evidence: docs/android/copy-append-suggestion-evidence.md#copysourcesasync
+  Source source = 2; // evidence: docs/android/copy-append-suggestion-evidence.md#copysourcesasync
+}
+
+message CopySourcesAsyncResponse {
+  repeated CopiedSource copied_sources = 1; // evidence: docs/android/copy-append-suggestion-evidence.md#copysourcesasync
+}
+
+message SourceAcknowledgement {
+  Source source = 1; // evidence: docs/android/copy-append-suggestion-evidence.md#addsourcesasync
+  int32 status = 2; // evidence: docs/android/copy-append-suggestion-evidence.md#addsourcesasync
+}
+
+message AddSourcesAsyncResponse {
+  repeated Source sources = 1; // evidence: docs/android/copy-append-suggestion-evidence.md#addsourcesasync
+  repeated SourceAcknowledgement acknowledgements = 3; // evidence: docs/android/copy-append-suggestion-evidence.md#addsourcesasync
+}

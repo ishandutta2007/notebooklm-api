@@ -1,0 +1,134 @@
+syntax = "proto3";
+
+package google.internal.labs.tailwind.orchestration.v1;
+
+import "google/internal/labs/tailwind/orchestration/v1/read.proto";
+import "labs/language/tailwind/common/protos/metadata.proto";
+
+// Exact-package GetLabels signature/label closure from the archived
+// gemini-notebook-mobile supported.proto identified in the evidence ledger.
+// That archive labels response field #2 as LabelAndSources; authenticated live
+// rows instead prove NotebookCollection there. The declaration below applies
+// that explicitly ledgered live-derived type correction while preserving the
+// exact response FQN, tag, and cardinality. Runtime still uses the visibly
+// repository-local byte-member overlay for the heterogeneous member encoding.
+message LabelAndSources {
+  string label = 1;
+  repeated SourceId source_ids = 2;
+  string label_id = 3;
+  string emoji = 4;
+}
+
+message GetLabelsRequest {
+  string project_id = 2;
+  int32 label_type = 3;
+}
+
+message GetLabelsResponse {
+  repeated LabelAndSources label_and_sources = 1;
+  // Live-derived correction: the archived snapshot says LabelAndSources.
+  repeated NotebookCollection notebook_collections = 2;
+}
+
+// Web-derived organization-write closure. The current bundle registers the
+// three method names with distinct request/response constructors; successful
+// Android-bearer CRUD pins the populated request tags below. The response
+// names are conventional inferences. Distinct web constructors remain distinct
+// below even where their currently observed fields serialize identically.
+// Create's response carries source labels at #2 and notebook collections at #3.
+// The collection row shape is live-proven on the Android-bearer route: name #1,
+// repeated raw notebook UUID strings #2, collection UUID #3, and emoji #4.
+// Mutate/delete use dedicated response constructors rather than the shared
+// google.protobuf.Empty ctor; no response fields are retained by the current
+// bundle, so the generated partial parsers intentionally admit none.
+message LabelProperties {
+  optional string name = 1;
+  optional string emoji = 2;
+}
+
+message ManualCreateLabel {
+  LabelProperties properties = 1;
+  repeated string source_ids = 2;
+  repeated string notebook_ids = 3;
+}
+
+// Current Web request ctor eHb and live Android-bearer probes pin the
+// presence-sensitive auto-create branch. An explicit false incrementally
+// labels unlabeled sources; true discards and regenerates all labels. A
+// present empty message is the product's distinct initial/default mode.
+message AutoCreateLabel {
+  optional bool regenerate_all = 1;
+}
+
+message CreateLabelRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1;
+  string project_id = 2;
+  oneof create_mode {
+    AutoCreateLabel auto_create = 5;
+    ManualCreateLabel manual_create = 6;
+  }
+  int32 label_type = 7;
+}
+
+message CreateLabelResponse {
+  repeated LabelAndSources label_and_sources = 2;
+  repeated NotebookCollection notebook_collections = 3;
+}
+
+message NotebookCollection {
+  string name = 1;
+  repeated string notebook_ids = 2;
+  string id = 3;
+  string emoji = 4;
+}
+
+message MutateLabelProperties {
+  optional string name = 1;
+  optional string emoji = 2;
+}
+
+message AddSourcesMutation {
+  repeated string member_ids = 1;
+}
+
+message RemoveSourcesMutation {
+  repeated string member_ids = 1;
+}
+
+message AddNotebooksMutation {
+  repeated string member_ids = 1;
+}
+
+message RemoveNotebooksMutation {
+  repeated string member_ids = 1;
+}
+
+message LabelMutation {
+  oneof mutation {
+    MutateLabelProperties properties = 1;
+    AddSourcesMutation add_sources = 2;
+    RemoveSourcesMutation remove_sources = 3;
+    AddNotebooksMutation add_notebooks = 4;
+    RemoveNotebooksMutation remove_notebooks = 5;
+  }
+  // Live oneof branches #6/#7 remain unrecovered and therefore undeclared.
+}
+
+message MutateLabelRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1;
+  string project_id = 2;
+  string label_id = 3;
+  repeated LabelMutation mutations = 4;
+  int32 label_type = 5;
+}
+
+message MutateLabelResponse {}
+
+message DeleteLabelsRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1;
+  string project_id = 2;
+  repeated string label_ids = 3;
+  int32 label_type = 4;
+}
+
+message DeleteLabelsResponse {}

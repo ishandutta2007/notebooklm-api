@@ -1,154 +1,224 @@
-# 🚀 open-notebooklm
+# 🚀 open-notebooklm — Open-Source Google NotebookLM & Gemini Notebook Automation
 
 <p align="center">
-  <img src="notebooklm-py.png" alt="open-notebooklm logo" width="160">
+  <img src="notebooklm-py.png" alt="open-notebooklm — Open-Source Google NotebookLM Python SDK, CLI, MCP Server & AI Agent Toolkit" width="160">
+</p>
+
+<h3 align="center">
+  The #1 Open-Source Python SDK, CLI, MCP Server & AI Agent Toolkit<br>
+  for Google NotebookLM / Gemini Notebook Automation
+</h3>
+
+<p align="center">
+  <em>Automate notebooks · Generate podcasts, videos & slides · Build AI agent memory · Zero-token RAG</em>
 </p>
 
 <p align="center">
-  <strong>The Ultimate Open-Source Google NotebookLM & Gemini Notebook Python SDK, CLI, MCP Server & AI Agent Toolkit</strong>
-</p>
-
-<p align="center">
-  <a href="https://pypi.org/project/notebooklm-py/"><img src="https://img.shields.io/pypi/v/notebooklm-py.svg?style=for-the-badge&color=blue" alt="PyPI version"></a>
-  <a href="https://pypi.org/project/notebooklm-py/"><img src="https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue?style=for-the-badge" alt="Python Versions"></a>
+  <a href="https://pypi.org/project/notebooklm-py/"><img src="https://img.shields.io/pypi/v/notebooklm-py.svg?style=for-the-badge&color=blue" alt="open-notebooklm PyPI version"></a>
+  <a href="https://pypi.org/project/notebooklm-py/"><img src="https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue?style=for-the-badge" alt="Python 3.10 3.11 3.12 3.13 3.14"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License: MIT"></a>
-  <a href="https://github.com/ishandutta2007/open-notebooklm"><img src="https://img.shields.io/badge/Status-Active%20%26%20Maintained-success?style=for-the-badge" alt="Status"></a>
+  <a href="https://github.com/ishandutta2007/open-notebooklm/stargazers"><img src="https://img.shields.io/github/stars/ishandutta2007/open-notebooklm?style=for-the-badge&color=orange" alt="GitHub Stars"></a>
+</p>
+
+<p align="center">
+  <a href="#-installation--quick-start">Install</a> · <a href="#-cli-workflow-cheat-sheet">CLI Cheat Sheet</a> · <a href="#-python-sdk">Python SDK</a> · <a href="#-mcp--ai-agent-integration">MCP & Agents</a> · <a href="docs/cli-reference.md">Full CLI Docs</a> · <a href="docs/python-api.md">API Reference</a>
 </p>
 
 ---
 
-## 🌟 Overview
+> ⚠️ **Unofficial & Community-Driven** — **open-notebooklm** is **not affiliated with, endorsed by, or maintained by Google**. It uses undocumented Google APIs that can change without notice. Best for prototypes, research, personal projects, and AI agent workflows. See [Troubleshooting](docs/troubleshooting.md) for debugging tips.
 
-**open-notebooklm** is a comprehensive, production-ready ecosystem for automating **Google NotebookLM** (now **Gemini Notebook**). Unlock full programmatic power over your notebooks, multimodal sources, grounding citations, and studio generation tools via:
-
-- ⚡ **Async Python API** – Modern, fully typed async client with context managers and error taxonomy.
-- 💻 **Feature-Packed CLI** – Scriptable Click-based command suite with structured JSON outputs.
-- 🔌 **Model Context Protocol (MCP) Server** – Direct integration with Claude Desktop, Claude Code, Codex, Antigravity, and OpenClaw.
-- 🤖 **Zero-Token AI Agent Synthesis** – Grounded RAG memory layer to offload expensive context reasoning to NotebookLM.
-- 🎙️ **Multimodal Studio Artifact Generator** – Audio Overviews (podcasts), video explainer summaries, slide decks (PPTX/PDF), quizzes, flashcards, mind maps, and interactive data tables.
-
-> ℹ️ **Google Rebranding Note:** Google rebranded **NotebookLM** to **[Gemini Notebook](https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/)**. This open-source toolkit seamlessly communicates with the underlying backend and supports both Web (`batchexecute`) and Android gRPC protocols.
+> ℹ️ **Gemini Notebook Rebrand (July 2026):** Google rebranded **NotebookLM** → **[Gemini Notebook](https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/)**. Same product, same API surface — **open-notebooklm** works unchanged with both names.
 
 ---
 
 ## 📑 Table of Contents
 
-- [✨ Key Features](#-key-features)
-- [📊 Account Tiers & Pricing Limits](#-account-tiers--pricing-limits)
-- [🏗️ System Architecture & Interfaces](#️-system-architecture--interfaces)
+- [🌟 Why open-notebooklm?](#-why-open-notebooklm)
+- [✨ Feature Matrix](#-feature-matrix)
+  - [📂 Notebook & Source Management](#-notebook--source-management)
+  - [🎙️ Content Generation & Studio Artifacts](#️-content-generation--studio-artifacts)
+  - [🔮 Beyond the Web UI](#-beyond-the-web-ui)
+- [📊 Google NotebookLM Pricing & Account Tiers](#-google-notebooklm-pricing--account-tiers)
+- [🏗️ Architecture & Integration Modes](#️-architecture--integration-modes)
 - [📦 Installation & Quick Start](#-installation--quick-start)
-  - [CLI Setup](#-cli-setup)
-  - [Python SDK Setup](#-python-sdk-setup)
-  - [MCP & Agent Setup](#-mcp--agent-setup)
-- [💡 Real-World Use Cases & Recipes](#-real-world-use-cases--recipes)
+  - [🖥️ CLI Setup](#️-cli-setup)
+  - [🔐 Authentication & Access](#-authentication--access)
+  - [🐍 Python SDK](#-python-sdk)
+  - [🔌 MCP & AI Agent Integration](#-mcp--ai-agent-integration)
+- [⌨️ CLI Workflow Cheat Sheet](#️-cli-workflow-cheat-sheet)
+- [💡 Use Cases & Recipes — What People Build with open-notebooklm](#-use-cases--recipes--what-people-build-with-open-notebooklm)
 - [📚 Documentation Index](#-documentation-index)
-- [🛡️ Security & Disclaimers](#️-security-disclaimers)
 - [📜 License](#-license)
 
 ---
 
-## ✨ Key Features
+## 🌟 Why open-notebooklm?
 
-| Domain | Capability Highlights |
+Google NotebookLM (Gemini Notebook) is a **grounded** AI engine: Gemini reads *your* sources and answers with citations. The winning pattern is to let it handle the expensive reasoning while your agent orchestrates the workflow — using NotebookLM as a **zero-token synthesis + memory layer** your agent drives in a loop, pulling structured artifacts **out** in bulk.
+
+**open-notebooklm** is the toolkit that makes this possible:
+
+| What you get | How it helps |
 |---|---|
-| 📂 **Notebook Management** | Create, duplicate (including Studio artifacts & sources), rename, list, and delete notebooks. |
-| 📥 **Multimodal Ingestion** | Bulk import PDFs, text, Markdown, Word, EPUB, audio, video, images, YouTube URLs, web URLs, and Google Drive files. |
-| 💬 **Cited Chat & Grounding** | Precise question-answering with inline source citations, customizable system personas, and chat-history-to-notes persistence. |
-| 🎙️ **Audio Overviews (Podcasts)** | Generate 2-host audio podcasts (deep-dive, brief, critique, debate) with 50+ language options and direct MP3/M4A download. |
-| 🎬 **Video Overviews** | Generate cinematic explainer videos across 8 visual styles with full MP4 local export. |
-| 📊 **Slide Decks & Presentations** | Generate detailed or presenter-style decks with natural language slide revision and PDF/PPTX export. |
-| 🧠 **Mind Maps & Study Sets** | Extract hierarchical JSON mind map trees, interactive studio mind maps, quizzes, flashcards, and CSV data tables. |
-| 🔍 **Autonomous Deep Research** | Launch automated web and Google Drive research sweeps that autonomously collect and attach relevant sources. |
+| ⚡ **Async Python SDK** | Modern, fully typed async client (`NotebookLMClient`) with context managers, rich error taxonomy, and 11 typed namespaces. |
+| 💻 **Production CLI** | 50+ Click subcommands with `--json` output for agent consumption, `--prompt-file` for long prompts, and structured error envelopes. |
+| 🔌 **MCP Server** | stdio + SSE transports for Claude Desktop, Claude Code, Codex, Antigravity, and ChatGPT — local or self-hosted remote behind Cloudflare/Tailscale. |
+| 🌐 **REST Server** | FastAPI localhost server for automation without spawning a CLI process per call. |
+| 🤖 **Agent Skills** | Bundled [SKILL.md](SKILL.md) + [AGENTS.md](AGENTS.md) for instant Claude Code / Codex / Antigravity tool-use. One-click install via `notebooklm skill install` or `npx skills add`. |
+| 📱 **Dual Transport** | Web (`batchexecute`) + Android (gRPC/Protobuf) backends — choose per-command or globally. |
+
+**New to open-notebooklm?** Start with a walkthrough: 🎬 [Claude Code + NotebookLM = CHEAT CODE (video)](https://www.youtube.com/watch?v=usTeU4Uh0iM) · 📝 [5 demos + 50 use cases, with prompts](https://aiblewmymind.substack.com/p/notebooklm-claude-code-use-cases).
 
 ---
 
-## 📊 Account Tiers & Pricing Limits
+## ✨ Feature Matrix
 
-Google NotebookLM is available across free and paid account tiers. **open-notebooklm** adapts to your tier's quotas automatically:
+### 📂 Notebook & Source Management
 
-| Service Tier | Pricing | Free Tier Availability & Limits | Source Capacity | Daily Generation Limits |
+| Category | Capabilities |
+|---|---|
+| **Notebooks** | Create, copy (including sources & Studio artifacts), list, rename, delete |
+| **Sources** | URLs, YouTube, files (PDF, text, Markdown, Word, EPUB, audio, video, images), Google Drive, pasted text; refresh, get source guide / fulltext |
+| **Chat** | Grounded Q&A with inline source citations, conversation history, custom system personas, suggested starter prompts |
+| **Notes** | Create, list, rename, delete, save chat answers as notes, save full conversation history to notes |
+| **Source Labels** | AI-generated or manual topic labels; add/remove source membership; filter sources by label |
+| **Research** | Web & Drive research agents (fast / deep modes) with auto-import of discovered sources |
+| **Sharing** | Public/private links, user permissions (viewer/editor), view-level control |
+
+### 🎙️ Content Generation & Studio Artifacts
+
+Every artifact type the NotebookLM Studio supports, exposed programmatically by **open-notebooklm**:
+
+| Artifact Type | Generation Options | Export / Download Formats |
+|---|---|---|
+| 🎙️ **Audio Overview (Podcast)** | 4 formats (deep-dive · brief · critique · debate), 3 lengths, 50+ languages | MP3, M4A |
+| 🎬 **Video Overview** | 4 formats (explainer · brief · cinematic · short), 8 visual styles + auto/custom, dedicated `cinematic-video` alias | MP4 |
+| 📊 **Slide Deck** | Detailed or presenter format, adjustable length, individual slide revision via natural language | PDF, PPTX |
+| 🖼️ **Infographic** | 3 orientations (landscape · portrait · square), 3 detail levels | PNG |
+| ❓ **Quiz** | Configurable quantity and difficulty | JSON, Markdown, HTML |
+| 🃏 **Flashcards** | Configurable quantity and difficulty | JSON, Markdown, HTML |
+| 📝 **Report** | Briefing doc, study guide, blog post, or fully custom prompt | Markdown |
+| 📋 **Data Table** | Custom structure via natural language | CSV |
+| 🧠 **Mind Map** | Two kinds: interactive studio map (default) or note-backed JSON tree (`--kind note-backed` / `MindMapKind`) | JSON |
+
+### 🔮 Beyond the Web UI
+
+Programmatic, batch, and local-file capabilities that **open-notebooklm** makes easy — features the web app doesn't offer:
+
+- 📦 **Batch downloads** — Download all artifacts of a type at once (`download <type> --all`)
+- 📝 **Quiz & flashcard export** — Structured JSON, Markdown, or HTML (straight into Anki)
+- 🧠 **Mind map data extraction** — Hierarchical JSON for visualization tools
+- 📊 **Data table CSV export** — Download structured tables as spreadsheets
+- 📑 **Slide deck as PPTX** — Download editable PowerPoint, not just PDF
+- ✏️ **Slide revision** — Modify individual slides with natural-language prompts
+- 📄 **Report template customization** — Append extra instructions to built-in format templates
+- 💬 **Save full chat history to notes** — Persist a complete Q&A conversation (not just a single answer)
+- 📖 **Source fulltext access** — Retrieve the indexed text content of any source
+- 🔗 **Programmatic sharing** — Manage permissions without touching the UI
+
+---
+
+## 📊 Google NotebookLM Pricing & Account Tiers
+
+**open-notebooklm** adapts to your Google account tier's quotas automatically:
+
+| Service Tier | Pricing | Free Tier Limits | Sources / Notebook | Generation Limits |
 |---|---|---|---|---|
-| **Standard Google Account** | **Free ($0 / mo)** | **Yes (Free Forever)**<br>• Up to 100 notebooks<br>• Up to 50 sources per notebook<br>• 500k words (~200MB) per source | 50 sources / notebook | Standard rate limits apply |
-| **Google Workspace / Education** | Included with Workspace subscription | **Free Trial available** via Workspace plans | Up to 50 sources / notebook | Elevated enterprise quotas |
-| **Gemini Advanced / Google One AI Premium** | ~$19.99 / mo | **1-Month Free Trial** | Priority processing & larger context windows | Higher concurrency & audio generation throughput |
+| **Standard Google Account** | **Free ($0 / mo)** | ✅ **Free forever** · 100 notebooks · 50 sources/notebook · 500k words/source | 50 | Standard rate limits |
+| **Google Workspace / Education** | Included in Workspace plans | ✅ Free trial available | 50 | Elevated enterprise quotas |
+| **Gemini Advanced (Google One AI Premium)** | **~$19.99 / mo** | 🆓 1-month free trial | Priority processing | Higher concurrency & throughput |
 
 ---
 
-## 🏗️ System Architecture & Interfaces
+## 🏗️ Architecture & Integration Modes
 
 ```mermaid
 graph TD
-    User([User / AI Agent / Pipeline]) --> Interface{Integration Mode}
-    Interface -->|Python Async SDK| Client[NotebookLMClient Facade]
-    Interface -->|CLI Commands| CLI[notebooklm CLI Engine]
-    Interface -->|MCP stdio / SSE| MCP[FastMCP Server]
-    Interface -->|REST API| REST[FastAPI Local Server]
+    User(["👤 User / 🤖 AI Agent / ⚙️ Pipeline"]) --> Interface{open-notebooklm Integration Mode}
+    Interface -->|"Python Async SDK"| Client["NotebookLMClient Facade"]
+    Interface -->|"CLI Commands"| CLI["notebooklm CLI (Click)"]
+    Interface -->|"MCP stdio / SSE"| MCP["FastMCP Server"]
+    Interface -->|"REST API"| REST["FastAPI Server"]
 
-    Client --> TransportLayer[Protocol Transport Layer]
+    Client --> Transport["Protocol Transport Layer"]
     CLI --> Client
     MCP --> Client
     REST --> Client
 
-    TransportLayer -->|Web batchexecute| WebRPC[Google Web RPC Engine]
-    TransportLayer -->|Android gRPC / Protobuf| AndroidRPC[Mobile gRPC Bearer Service]
+    Transport -->|"Web batchexecute"| WebRPC["Google Web RPC"]
+    Transport -->|"Android gRPC + Protobuf"| AndroidRPC["Mobile gRPC Bearer"]
     
-    WebRPC --> GoogleNLM[(Google NotebookLM / Gemini)]
-    AndroidRPC --> GoogleNLM
+    WebRPC --> Google[("☁️ Google NotebookLM / Gemini Notebook")]
+    AndroidRPC --> Google
 ```
+
+| Integration Mode | Best For |
+|---|---|
+| 🐍 **Python API** | Application embedding, async workflows, custom pipelines |
+| 💻 **CLI** | Shell scripts, cron jobs, CI/CD automation, quick tasks |
+| 🔌 **MCP Server** | Claude Desktop / Claude Code / Codex / Antigravity — local stdio or remote via Cloudflare/Tailscale tunnel (reachable from claude.ai mobile & ChatGPT) |
+| 🌐 **REST Server** | High-throughput local automation without subprocess overhead |
+| 🤖 **Agent Skills** | Claude Code, Codex, Antigravity — natural language orchestration via bundled SKILL.md |
+
+### 📱 Android Backend
+
+The default transport is the Web (`batchexecute`) protocol. **open-notebooklm** also ships an opt-in **Android backend** using NotebookLM's mobile gRPC service with master-token bearer auth — no browser cookies needed:
+
+```bash
+pip install "notebooklm-py[android,browser]"
+notebooklm login --master-token --account you@example.com
+notebooklm --backend android list --json
+```
+
+All 11 public API namespaces are available on the Android transport. See the [Android Backend Guide](docs/android/README.md) for protocol details.
 
 ---
 
 ## 📦 Installation & Quick Start
 
+> 📘 Full install guide (6 personas, extras matrix, platform notes): **[docs/installation.md](docs/installation.md)**
+
 ### 🖥️ CLI Setup
 
-Install the CLI in an isolated environment using `uv tool` or `pipx`:
-
 ```bash
-# Recommended installation with browser automation support
+# Recommended: isolated install via uv tool (or pipx)
 uv tool install "notebooklm-py[browser]"
 
-# Authenticate with your Google account
+# Authenticate (opens Chromium for Google sign-in)
 notebooklm login
 
-# Verify connectivity
+# Verify — expect {"status": "ok"}
 notebooklm auth check --test --json
 ```
 
-#### CLI Workflow Example:
+> 💡 **Why `uv tool` / `pipx`?** They install `notebooklm` into its own isolated environment on your `PATH` — no dependency clashes, one-line upgrade (`uv tool upgrade notebooklm-py`), and they work on modern macOS / Debian / Ubuntu where system-wide `pip install` is blocked ([PEP 668](https://peps.python.org/pep-0668/)). No `uv` yet? `curl -LsSf https://astral.sh/uv/install.sh | sh`.
+
+**Prefer plain `pip`?** Works fine inside a virtualenv:
 
 ```bash
-# 1. Create a notebook
-notebooklm create "Autonomous AI Systems"
-notebooklm use <notebook_id>
-
-# 2. Add sources (URLs, PDFs, docs)
-notebooklm source add "https://en.wikipedia.org/wiki/Artificial_intelligence"
-notebooklm source add "./research_paper.pdf"
-
-# 3. Ask grounded questions
-notebooklm ask "What are the core breakthroughs described in the sources?"
-
-# 4. Generate & download an audio overview podcast
-notebooklm generate audio "Focus on the real-world applications" --wait
-notebooklm download audio ./podcast_overview.m4a
-
-# 5. Generate interactive study tools
-notebooklm generate quiz --difficulty hard
-notebooklm download quiz --format markdown ./quiz.md
+python3 -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install "notebooklm-py[browser]"
 ```
 
----
-
-### 🐍 Python SDK Setup
-
-Install as a lightweight Python dependency:
+**As a library** (no Playwright, no Chromium):
 
 ```bash
 pip install notebooklm-py
 ```
 
-#### Python Async Example:
+### 🔐 Authentication & Access
+
+**open-notebooklm** supports flexible auth for local dev, headless servers, and multi-tenant setups:
+
+| Auth Method | Command | Use Case |
+|---|---|---|
+| 🌐 **Interactive Playwright login** (default) | `notebooklm login` | Local development, first-time setup |
+| 🍪 **Import browser cookies** (no Playwright needed) | `notebooklm login --browser-cookies chrome` | Reuse an already-signed-in Chrome/Edge session |
+| 🔑 **Master-token auth** (headless, self-healing) | `notebooklm login --master-token --account you@example.com` | Servers, CI/CD, remote MCP connector — mints fresh cookies on demand |
+| 👥 **Multi-account profiles** | `notebooklm profile switch work` | Switch between Google accounts without re-auth |
+
+### 🐍 Python SDK
 
 ```python
 import asyncio
@@ -157,49 +227,45 @@ from notebooklm import NotebookLMClient, MindMapKind
 
 async def main():
     async with NotebookLMClient.from_storage() as client:
-        # 1. Create notebook & attach sources
-        notebook = await client.notebooks.create("Machine Learning Deep Dive")
-        await client.sources.add_url(
-            notebook.id,
-            "https://en.wikipedia.org/wiki/Machine_learning",
-            wait=True,
-        )
+        # Create notebook & attach sources
+        nb = await client.notebooks.create("Research")
+        await client.sources.add_url(nb.id, "https://example.com", wait=True)
 
-        # 2. Query with grounded citations
-        response = await client.chat.ask(notebook.id, "Summarize the primary supervised learning methods.")
-        print(f"Answer:\n{response.answer}\n")
+        # Grounded Q&A with citations
+        result = await client.chat.ask(nb.id, "Summarize the key findings")
+        print(result.answer)
 
-        # 3. Generate and export a mind map
-        mind_map = await client.mind_maps.generate(notebook.id, kind=MindMapKind.INTERACTIVE)
-        await client.artifacts.download_mind_map(notebook.id, "mindmap.json", mind_map.id)
-        print("Mind map saved to mindmap.json!")
+        # Generate podcast + quiz + mind map
+        audio = await client.artifacts.generate_audio(nb.id, instructions="make it fun")
+        await client.artifacts.wait_for_completion(nb.id, audio.task_id)
+        await client.artifacts.download_audio(nb.id, "podcast.m4a")
+
+        quiz = await client.artifacts.generate_quiz(nb.id)
+        await client.artifacts.wait_for_completion(nb.id, quiz.task_id)
+        await client.artifacts.download_quiz(nb.id, "quiz.json", output_format="json")
+
+        mm = await client.mind_maps.generate(nb.id, kind=MindMapKind.INTERACTIVE)
+        await client.artifacts.download_mind_map(nb.id, "mindmap.json", mm.id)
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+asyncio.run(main())
 ```
 
----
+### 🔌 MCP & AI Agent Integration
 
-### 🔌 MCP & Agent Setup
+Connect **open-notebooklm** to Claude Code, Codex, Antigravity, or Claude Desktop:
 
-Connect **open-notebooklm** directly to Claude Code, Codex, Antigravity, or Claude Desktop:
-
-#### One-Click Agent Skill Install:
+**One-click agent skill install:**
 ```bash
-notebooklm skill install
+notebooklm skill install              # → ~/.claude/skills/notebooklm + ~/.agents/skills/notebooklm
+npx skills add ishandutta2007/open-notebooklm  # via open skills registry
 ```
 
-#### NPX Skill Registry Discovery:
-```bash
-npx skills add teng-lin/notebooklm-py
-```
-
-#### Claude Desktop Configuration (`claude_desktop_config.json`):
+**Claude Desktop MCP config** (`claude_desktop_config.json`):
 ```json
 {
   "mcpServers": {
-    "notebooklm": {
+    "open-notebooklm": {
       "command": "uv",
       "args": ["tool", "run", "notebooklm", "mcp"]
     }
@@ -207,36 +273,154 @@ npx skills add teng-lin/notebooklm-py
 }
 ```
 
+**Remote MCP server** (reachable from claude.ai mobile / ChatGPT):
+```bash
+# Self-host behind Cloudflare/Tailscale tunnel
+notebooklm mcp --transport sse --host 0.0.0.0 --port 8080
+```
+
 ---
 
-## 💡 Real-World Use Cases & Recipes
+## ⌨️ CLI Workflow Cheat Sheet
 
-- 🪙 **Zero-Token Research Offloading** – Load 50 complex PDF reports into a notebook and have your agent query NotebookLM for distilled synthesis instead of consuming millions of LLM context tokens.
-- 💾 **Persistent Grounded Memory for Coding Agents** – Connect your internal codebase documentation and architecture notes via MCP so coding agents answer with verifiable source citations.
-- 🎙️ **Automated Podcast & Content Pipelines** – Ingest daily RSS articles or technical releases and automatically output dual-host audio briefings.
-- 🕸️ **Obsidian & Second-Brain Sync** – Download reports, structured mind maps, and flashcards directly into your local Markdown knowledge graph.
+<p align="center">
+  <a href="https://asciinema.org/a/767284" target="_blank"><img src="https://asciinema.org/a/767284.svg" width="600" /></a>
+  <br>
+  <em>16-minute open-notebooklm session compressed to 30 seconds</em>
+</p>
+
+### Core Workflow
+
+```bash
+# 🔐 Authenticate
+notebooklm login
+notebooklm login --browser msedge                    # Edge SSO
+notebooklm login --browser-cookies 'chrome::Profile 1'  # import cookies
+
+# 📓 Create & select notebook
+notebooklm create "My Research"
+notebooklm use <notebook_id>
+
+# 📥 Add sources (URLs, files, YouTube, Drive)
+notebooklm source add "https://en.wikipedia.org/wiki/Artificial_intelligence"
+notebooklm source add "./paper.pdf"
+notebooklm source add-research "AI safety" --import-all  # deep web research
+
+# 💬 Chat with grounded citations
+notebooklm ask "What are the key themes?"
+notebooklm ask --prompt-file ./long_question.txt
+
+# 🎙️ Generate all artifact types
+notebooklm generate audio "make it engaging" --wait
+notebooklm generate video --style whiteboard --wait
+notebooklm generate cinematic-video "documentary-style" --wait
+notebooklm generate quiz --difficulty hard
+notebooklm generate flashcards --quantity more
+notebooklm generate slide-deck
+notebooklm generate infographic --orientation portrait
+notebooklm generate mind-map
+notebooklm generate data-table "compare key concepts"
+notebooklm generate report --format briefing-doc --wait
+
+# 📥 Download everything
+notebooklm download audio ./podcast.m4a
+notebooklm download video ./overview.mp4
+notebooklm download quiz --format markdown ./quiz.md
+notebooklm download flashcards --format json ./cards.json
+notebooklm download slide-deck ./slides.pptx
+notebooklm download infographic ./infographic.png
+notebooklm download mind-map ./mindmap.json
+notebooklm download data-table ./data.csv
+```
+
+### Utility Commands
+
+```bash
+notebooklm auth check --test              # diagnose auth issues
+notebooklm auth refresh --quiet            # cookie keepalive (cron/systemd)
+notebooklm metadata --json                 # export notebook metadata
+notebooklm share status                    # inspect sharing state
+notebooklm language list                   # 50+ supported languages
+notebooklm profile list                    # list Google account profiles
+notebooklm skill status                    # check agent skill installation
+notebooklm agent show codex                # print bundled Codex instructions
+```
+
+---
+
+## 💡 Use Cases & Recipes — What People Build with open-notebooklm
+
+### 🪙 Spend Fewer Tokens — Let NotebookLM Do the Expensive Thinking
+
+- **Zero-token research offload** — Throw 30 documents into a notebook, let Gemini do the heavy analysis, your agent spends tokens only on the final polish. The agent just orchestrates (`create` → `source add` → `ask`); reasoning happens server-side. *In the wild: [a four-workflow guide to stop Claude Code burning tokens](https://x.com/hooeem/status/2042293751805329445).*
+
+- **🧠 Knowledge distillation → a permanent skill** — Run Deep Research (`source add-research "topic" --mode deep`), let NotebookLM condense a doc corpus, bake the result into a `SKILL.md` your agent loads at startup — **build once, reuse with zero runtime tokens**, git-versioned and immune to UI drift.
+
+- **✅ Self-validating skills** — Have NotebookLM generate the *eval set* (a quiz from your sources) to grade an agent skill against ground truth. *In the wild: [a skill that scored 4/10 → 10/10 after one iteration, graded by a NotebookLM-generated quiz](https://x.com/nurijanian/status/2037136490157986277).*
+
+### 💾 Give Your Agent Memory — Persistent, Grounded Recall
+
+- **Persistent cross-session memory** — Keep a "Master Brain" notebook; a wrap-up step appends each session's decisions as notes, and your `CLAUDE.md` queries it at session start. Storage lives on Google's infrastructure.
+
+- **🧩 Grounded memory for coding agents** — Expose internal docs/RFCs/architecture via the [MCP server](docs/mcp-guide.md) so your agent answers from *your* code with citations — a zero-infra alternative to a custom vector DB. *In the wild: [turning a notebook into a "project brain" a coding agent consults](https://medium.com/@pradeep00271/every-software-project-needs-a-project-brain-5cbc33917160).*
+
+- **🪞 Query your own notes / journal** — Load years of daily notes and `ask` for cited answers across your history. *In the wild: [chatting with a year of daily notes](https://artemxtech.substack.com/p/notebooklm-has-a-knowledge-graph).*
+
+### 🎙️ Turn Sources into Artifacts — Cited Responses, Media & Exports
+
+- **📞 Grounded knowledge base / RAG oracle** — Load product docs & FAQs, then `ask --json` for source-grounded answers for support or on-call. *In the wild: [OpenClaw scraped 524 pages, deduped to 269 clean sources](https://x.com/onenewbite/status/2024819940327379286).*
+
+- **🔁 Multi-format content repurposing** — One source set → podcast + video + slide deck + quiz + flashcards + blog draft. Fan a single notebook across channels.
+
+- **🕸️ Obsidian / knowledge-graph sync** — CLI downloads land as files in your vault; community skills even resolve NotebookLM citation markers into `[[wikilinks]]`. *In the wild: ["Claude Code + NotebookLM + Obsidian = GOD MODE"](https://www.youtube.com/watch?v=kU3qYQ7ACMA).*
+
+### ⚙️ Run It Unattended, at Scale, or on the Go
+
+- **🚨 Incident runbook generator** — On alert → spin up a notebook → load docs → `generate report --format briefing-doc` → automated runbook.
+- **📚 Curriculum builder** — One notebook per topic → bulk-generate podcasts, quizzes, and flashcards.
+- **📰 Scheduled audio briefings** — `auth refresh --quiet` (cron) + `generate audio` → fresh daily podcast feed.
+- **📱 NotebookLM from your phone** — Self-host the [remote MCP connector](docs/mcp-guide.md#remote-deployment-docker--a-tunnel) behind a tunnel → drive **open-notebooklm** from the claude.ai mobile app. *No app-hopping required.*
 
 ---
 
 ## 📚 Documentation Index
 
-- 📖 **[Installation Guide](docs/installation.md)** – Detailed setup across all environments and platforms.
-- 💻 **[CLI Reference](docs/cli-reference.md)** – Comprehensive manual for all CLI subcommands.
-- 🐍 **[Python API Reference](docs/python-api.md)** – Complete reference for classes, methods, and types.
-- 🔌 **[MCP Server Guide](docs/mcp-guide.md)** – Full guide for stdio and remote MCP server hosting.
-- 📱 **[Android Backend Guide](docs/android/README.md)** – Setup for mobile gRPC bearer-token workflows.
-- 🏛️ **[Architecture & ADRs](docs/architecture.md)** – Architectural decisions and system contracts.
-- 🛠️ **[Troubleshooting & FAQ](docs/troubleshooting.md)** – Solutions for auth, rate limits, and common errors.
-- 🤝 **[Contributing Guidelines](CONTRIBUTING.md)** – How to contribute, run tests, and format code.
+### 📘 User Guides
 
----
+| Doc | Description |
+|---|---|
+| 📖 **[Installation Guide](docs/installation.md)** | 6 personas, extras matrix, platform notes, deployment setup |
+| 💻 **[CLI Reference](docs/cli-reference.md)** | Complete command documentation for all 50+ subcommands |
+| 🐍 **[Python API Reference](docs/python-api.md)** | Full async client reference — classes, methods, types |
+| 🔌 **[MCP Server Guide](docs/mcp-guide.md)** | stdio + SSE transports, tool reference, remote deployment |
+| 📱 **[Android Backend Guide](docs/android/README.md)** | Mobile gRPC setup, master-token credentials, protocol notes |
+| ⚙️ **[Configuration](docs/configuration.md)** | Storage paths, profiles, environment variables |
+| 📊 **[Quota & Tier Limits](docs/quota-limits.md)** | Per-tier notebook/source/studio limits |
+| 🛠️ **[Troubleshooting](docs/troubleshooting.md)** | Auth issues, rate limits, common errors |
+| 🔒 **[Credential Security](docs/security.md)** | Secret handling and trust boundaries |
+| 📐 **[API Stability](docs/stability.md)** | Versioning policy and stability guarantees |
+| 🔄 **[Upgrading to v0.8.0](docs/upgrading-to-0.8.0.md)** | Breaking-change migration guide |
 
-## 🛡️ Security & Disclaimers
+### 🛠️ Contributor Guides
 
-> ⚠️ **Disclaimer:** This is an independent, community-driven open-source project and is **not affiliated with, maintained by, or endorsed by Google**. Google NotebookLM and Gemini are registered trademarks of Google LLC. This library relies on undocumented endpoints that are subject to change.
+| Doc | Description |
+|---|---|
+| 🏛️ **[Architecture](docs/architecture.md)** | System overview and design principles |
+| 🧪 **[Development Guide](docs/development.md)** | Testing, linting, and releasing |
+| 🔬 **[RPC Development](docs/rpc-development.md)** | Protocol capture and debugging |
+| 📡 **[RPC Reference](docs/rpc-reference.md)** | Payload structures |
+| 📋 **[Changelog](CHANGELOG.md)** | Version history and release notes |
+| 🔐 **[Security Policy](SECURITY.md)** | Vulnerability reporting |
+| 🤝 **[Contributing](CONTRIBUTING.md)** | How to contribute, run tests, format code |
 
 ---
 
 ## 📜 License
 
-Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for complete terms.
+**open-notebooklm** is distributed under the **MIT License**. See [`LICENSE`](LICENSE) for complete terms.
+
+---
+
+<p align="center">
+  <strong>⭐ If open-notebooklm saves you time, consider starring the repo — it helps others discover the project!</strong>
+</p>

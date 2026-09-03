@@ -1,0 +1,14 @@
+{
+  "allowlisted_ceilings": {
+    "_android/proto/google/internal/labs/tailwind/orchestration/v1/orchestration_service_pb2_grpc.py": 2546,
+    "_android/sources.py": 1664,
+    "exceptions.py": 1610
+  },
+  "budget": 1500,
+  "shrink_locked_ceilings": {
+    "_auth/psidts_recovery.py": 1214,
+    "_auth/refresh.py": 1184,
+    "_auth/storage.py": 1089,
+    "_browser/browser_capture.py": 1439
+  }
+}

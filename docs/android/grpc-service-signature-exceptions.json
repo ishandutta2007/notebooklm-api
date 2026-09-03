@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "description": "Implemented Android gRPC paths omitted from the generated orchestration service. Empty after the web-derived signature promotion on 2026-08-29.",
+  "exceptions": []
+}

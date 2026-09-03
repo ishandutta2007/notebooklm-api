@@ -1,0 +1,126 @@
+syntax = "proto3";
+
+package google.internal.labs.tailwind.orchestration.v1;
+
+import "google/internal/labs/tailwind/orchestration/v1/read.proto";
+import "labs/language/tailwind/common/protos/metadata.proto";
+
+// Exact-package notebook mutation/guide closure copied from the pinned
+// orchestration supported.proto. The runtime adapter may use a repository-local
+// wire overlay when a live-only field is not present in this archived subset;
+// that parser choice does not change the remote request/response type identity.
+
+message CreateProjectRequest {
+  string name = 1;
+}
+
+message ProjectMutation {
+  message ChangePropertyMutation {
+    string new_title = 2;
+  }
+
+  ChangePropertyMutation change_property = 4;
+}
+
+message MutateProjectRequest {
+  string project_id = 1;
+  repeated ProjectMutation mutations = 2;
+}
+
+message DeleteProjectsRequest {
+  repeated string project_ids = 1;
+}
+
+// Exact official-APK request/response binding. The request tags are recovered
+// from the generated mobile message and the response is google.protobuf.Empty
+// in the generated RpcClientMethod signature.
+message RemoveRecentlyViewedProjectRequest {
+  string project_id = 1;
+  .labs.language.tailwind.common.protos.RequestContext request_context = 2;
+}
+
+// Web-derived signature candidate for te3DCe -> CopyProject. The current web
+// bundle uses the same response constructor as CreateProject and
+// MutateProject, while a successful Android-bearer replay pins fields #2/#3.
+message CopyProjectRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1;
+  string source_project_id = 2;
+  string title = 3;
+}
+
+enum SuggestionConfigId {
+  SUGGESTION_CONFIG_UNSPECIFIED = 0;
+  SUGGESTION_CONFIG_AUDIO_OVERVIEW_DEEP_DIVE = 1;
+  SUGGESTION_CONFIG_AUDIO_OVERVIEW_BRIEF = 2;
+  SUGGESTION_CONFIG_VIDEO_OVERVIEW_EXPLAINER = 3;
+  SUGGESTION_CONFIG_VIDEO_OVERVIEW_BRIEF = 4;
+  SUGGESTION_CONFIG_AUDIO_OVERVIEW_CRITIQUE = 5;
+  SUGGESTION_CONFIG_AUDIO_OVERVIEW_DEBATE = 6;
+  SUGGESTION_CONFIG_VIDEO_OVERVIEW_BREAKDOWN = 7;
+  SUGGESTION_CONFIG_QUIZ = 8;
+  SUGGESTION_CONFIG_FLASHCARDS = 9;
+  SUGGESTION_CONFIG_VIDEO_OVERVIEW_SHORT = 10;
+}
+
+enum MagicArtifactType {
+  MAGIC_ARTIFACT_TYPE_UNSPECIFIED = 0;
+  MINDMAP = 1;
+  AUDIO_OVERVIEW = 2;
+  VIDEO_OVERVIEW = 3;
+  NOTE = 4;
+  TABLE = 5;
+  LINE_CHART = 6;
+  FLASHCARDS = 7;
+  REPORT = 8;
+  CONVERSATIONAL_TEXT_CHIP = 9;
+  VIDEO_OVERVIEW_TEXT_CHIP = 10;
+  AUDIO_OVERVIEW_TEXT_CHIP = 11;
+  REPORT_TEXT_CHIP = 12;
+  FLASHCARDS_TEXT_CHIP = 13;
+  QUIZ_TEXT_CHIP = 14;
+  SOURCE_DISCOVERY_TEXT_CHIP = 15;
+}
+
+message PromptSuggestion {
+  string title = 1;
+  string prompt = 2;
+}
+
+message GeneratePromptSuggestionsRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1;
+  string project_id = 2;
+  repeated SourceId source_ids = 3;
+  SuggestionConfigId config_id = 4;
+  // Web bundle field #6; accepted by the Android bearer route in a live probe.
+  string query = 6;
+}
+
+message GeneratePromptSuggestionsResponse {
+  repeated PromptSuggestion suggestions = 1;
+}
+
+message NextStep {
+  string suggestion = 1;
+  MagicArtifactType suggestion_type = 2;
+}
+
+message NextStepSuggestions {
+  repeated NextStep next_steps = 1;
+}
+
+message NotebookSummary {
+  string text_summary = 1;
+}
+
+message NotebookGuide {
+  NotebookSummary summary = 1;
+  NextStepSuggestions next_step_suggestions = 6;
+}
+
+message GenerateNotebookGuideRequest {
+  string project_id = 1;
+}
+
+message GenerateNotebookGuideResponse {
+  NotebookGuide notebook_guide = 1;
+}

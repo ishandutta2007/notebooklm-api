@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+// These are deliberately repository-local wire-equivalent messages, not a
+// claim about Google's protobuf package or import graph. The notebook captures prove
+// the serialized fields below and the full gRPC method paths, while the
+// flattened Dart recovery alone is insufficient exact-package evidence.
+package notebooklm.internal.android.wire.v1;
+
+import "google/internal/labs/tailwind/orchestration/v1/account.proto";
+import "google/internal/labs/tailwind/orchestration/v1/notebooks.proto";
+import "google/internal/labs/tailwind/orchestration/v1/read.proto";
+import "labs/language/tailwind/common/protos/common.proto";
+import "labs/language/tailwind/common/protos/metadata.proto";
+
+message WireProjectChangeProperty {
+  string new_title = 2; // evidence: docs/android/endpoints.md#mutateproject--rename--edit-notebook-fields
+  // Repository-local name. Live Android set/clear/combined read-back proves
+  // tag #3 and explicit empty-string presence without claiming a Google FQN.
+  optional string new_emoji = 3; // evidence: docs/android/resource-lifecycle-and-public-qualification.md
+}
+
+message WireProjectMutation {
+  WireProjectChangeProperty change_property = 4; // evidence: docs/android/endpoints.md#mutateproject--rename--edit-notebook-fields
+  WireProjectAdvancedSettings advanced_settings = 8; // evidence: live Android-bearer write/read-back, 2026-08-29
+  WireProjectChangeViewLevel change_view_level = 9; // evidence: live Android-bearer write/read-back, 2026-08-31
+}
+
+// Repository-local names for the share view-level branch of MutateProject.
+// The Web client drives the same RPC positionally (``_web/sharing.py``
+// ``[notebook_id, [[_ x8, [[level]]]]]``); index 8 is tag #9 under the mapping
+// already proven for ``change_property`` (#4) and ``advanced_settings`` (#8).
+// A live Web write followed by an Android-bearer ``GetProject`` read-back
+// showed ``Project`` tag #9 holding ``{level:#1}`` -- ``0800`` for
+// FULL_NOTEBOOK and ``0801`` for CHAT_ONLY.
+message WireProjectViewLevel {
+  // ``optional`` for the same reason as ``new_emoji`` above: FULL_NOTEBOOK is
+  // wire value 0, and a plain proto3 scalar would drop it from the mutation
+  // entirely. The read-back proves the server itself always emits the tag
+  // (``0800``), so presence -- not the default -- is the contract.
+  optional int32 level = 1; // ShareViewLevel wire enum: 0=full notebook, 1=chat only
+}
+
+message WireProjectChangeViewLevel {
+  WireProjectViewLevel view_level = 1;
+}
+
+message WireProjectGoalSettings {
+  int32 goal = 1; // ChatGoal wire enum: 1=default, 2=custom, 3=learning guide
+  string custom_prompt = 2;
+}
+
+message WireProjectResponseStyleSettings {
+  int32 response_length = 1; // ChatResponseLength wire enum: 1=default, 4=longer, 5=shorter
+}
+
+message WireProjectAdvancedSettings {
+  WireProjectGoalSettings goal_settings = 1;
+  WireProjectResponseStyleSettings response_style_settings = 2;
+}
+
+message WireMutateProjectRequest {
+  string project_id = 1; // evidence: docs/android/endpoints.md#mutateproject--rename--edit-notebook-fields
+  repeated WireProjectMutation mutations = 2; // evidence: docs/android/endpoints.md#mutateproject--rename--edit-notebook-fields
+  .labs.language.tailwind.common.protos.RequestContext request_context = 3; // evidence: live Android-bearer chat-config mutation, 2026-08-29
+}
+
+// Wire-equivalent Project projection used to preserve/read the live-proven
+// advanced_settings #8 branch alongside every exact public Project field.
+// The local package avoids claiming an unproven Google FQN for the settings
+// messages; protobuf message identities are not serialized on the wire.
+message WireProjectWithAdvancedSettings {
+  string title = 1;
+  repeated .google.internal.labs.tailwind.orchestration.v1.Source sources = 2;
+  string id = 3;
+  string emoji = 4;
+  .google.internal.labs.tailwind.orchestration.v1.ProjectMetadata metadata = 6;
+  WireProjectAdvancedSettings advanced_settings = 8;
+  WireProjectViewLevel view_level = 9; // evidence: live Android-bearer read-back, 2026-08-31
+  .google.internal.labs.tailwind.orchestration.v1.PremiumFeatureInfo premium_feature_info = 10;
+  .google.internal.labs.tailwind.orchestration.v1.TierLimits project_tier_limits = 11;
+  repeated .labs.language.tailwind.common.protos.ChatSession chat_sessions = 12;
+}
+
+message WireGetProjectResponse {
+  WireProjectWithAdvancedSettings project = 1;
+}
+
+message WireSuggestedTopic {
+  string question = 1; // evidence: docs/android/endpoints.md#generatenotebookguide
+  string prompt = 2; // evidence: docs/android/endpoints.md#generatenotebookguide
+}
+
+message WireSuggestedTopics {
+  repeated WireSuggestedTopic topics = 1; // evidence: docs/android/endpoints.md#generatenotebookguide
+}
+
+message WireNotebookGuide {
+  .google.internal.labs.tailwind.orchestration.v1.NotebookSummary summary = 1; // evidence: docs/android/endpoints.md#generatenotebookguide
+  WireSuggestedTopics suggested_topics = 2; // evidence: docs/android/endpoints.md#generatenotebookguide
+}
+
+message WireGenerateNotebookGuideResponse {
+  WireNotebookGuide notebook_guide = 1; // evidence: docs/android/endpoints.md#generatenotebookguide
+}

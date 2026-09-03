@@ -1,0 +1,383 @@
+syntax = "proto3";
+
+package google.internal.labs.tailwind.orchestration.v1;
+
+import "google/internal/labs/tailwind/orchestration/v1/read.proto";
+import "google/internal/labs/tailwind/orchestration/v1/sources.proto";
+import "google/internal/labs/tailwind/orchestration/v1/notebooks.proto";
+import "google/internal/labs/tailwind/orchestration/v1/agency/supported.proto";
+import "google/protobuf/timestamp.proto";
+import "labs/language/tailwind/common/protos/common.proto";
+import "labs/language/tailwind/common/protos/metadata.proto";
+
+// Service-free exact-package chat message overlay. The cumulative service in
+// orchestration_service.proto imports the three independently exact method
+// signatures. Only captured fields consumed by the chat contract are
+// declared here; RequestContext, Provenance, unconsumed document variants, and
+// speculative citation fields remain unknown fields.
+
+enum QueryOrigin {
+  QUERY_ORIGIN_UNSPECIFIED = 0;
+  QUERY_ORIGIN_CHAT_TEXT_BOX = 1;
+  QUERY_ORIGIN_SUGGESTION_CHIP = 2;
+  QUERY_ORIGIN_APP_VIEWER_EXPLAIN_BUTTON = 3;
+  QUERY_ORIGIN_SOURCE_KEY_TOPIC_CHIP = 4;
+  QUERY_ORIGIN_MINDMAP_TOPIC_CHIP = 5;
+  QUERY_ORIGIN_GETTING_STARTED_MESSAGE = 6;
+  QUERY_ORIGIN_LINK_SERVICE = 7;
+  QUERY_ORIGIN_ARTIFACT_VIEWER = 8;
+}
+
+enum EmptyAnswerReason {
+  EMPTY_ANSWER_REASON_UNKNOWN = 0;
+  UNANSWERABLE = 1;
+  FILTERED = 2;
+}
+
+enum NamedStyleType {
+  NAMED_STYLE_TYPE_UNSPECIFIED = 0;
+  NORMAL_TEXT = 1;
+  TITLE = 2;
+  SUBTITLE = 3;
+  HEADING_1 = 4;
+  HEADING_2 = 5;
+  HEADING_3 = 6;
+  HEADING_4 = 7;
+  HEADING_5 = 8;
+  HEADING_6 = 9;
+}
+
+enum ListType {
+  LIST_TYPE_UNSPECIFIED = 0;
+  LIST_TYPE_UNORDERED = 1;
+  LIST_TYPE_ORDERED = 2;
+}
+
+enum ContentType {
+  CONTENT_TYPE_UNSPECIFIED = 0;
+  MARKDOWN = 1;
+  TAILWIND_DOC = 2;
+  HTML = 3;
+}
+
+enum MathStyleType {
+  MATH_STYLE_TYPE_UNSPECIFIED = 0;
+  MATH_STYLE_TYPE_INLINE = 1;
+  MATH_STYLE_TYPE_DISPLAY = 2;
+}
+
+enum ResponseType {
+  TYPE_UNSPECIFIED = 0;
+  TYPE_DEFAULT_ANSWER = 1;
+  TYPE_THOUGHT = 2;
+}
+
+message ConversationEvent {
+  enum ConversationEventType {
+    EVENT_TYPE_UNKNOWN = 0;
+    USER_QUERY = 1;
+    GENERATED_RESPONSE = 2;
+  }
+
+  string text = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  ConversationEventType type = 3; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message ConversationTurnKey {
+  string session_id = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  string conversation_id = 2; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  int32 observed_field_3 = 3; // exact archive name; opaque captured value
+}
+
+message ObjectId {
+  string id = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message Range {
+  int32 start_index = 2; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  int32 end_index = 3; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message AnnotationMapEntry {
+  ObjectId object_id = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  Range content_range = 2; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message FontInfo {
+  string font_family = 1;
+  int32 weight = 2;
+  double font_size_pt = 3;
+}
+
+message Color {
+  int32 red = 1;
+  int32 green = 2;
+  int32 blue = 3;
+}
+
+message TextStyle {
+  bool bold = 1;
+  bool italic = 2;
+  bool underline = 3;
+  string url = 4;
+  FontInfo font_info = 5;
+  Color text_color = 6;
+  Color background_color = 7;
+  bool code = 8;
+  bool strikethrough = 9;
+  MathStyleType math = 10;
+}
+
+message TextRun {
+  string content = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  TextStyle text_style = 2; // evidence: official APK exact TailwindDoc schema
+}
+
+message Image {
+  string url = 1;
+  string source_image_id = 3;
+  int32 block_reason = 4;
+}
+
+message Resource {
+  string id = 1;
+}
+
+message ParagraphElement {
+  int32 start_index = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  int32 end_index = 2; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  TextRun text_run = 3; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  Image image = 4; // evidence: official APK exact TailwindDoc schema
+  Resource resource = 5; // evidence: official APK exact TailwindDoc schema
+}
+
+message BulletInfo {
+  int32 nesting_level = 3;
+  string glyph = 101;
+  ListType list_type = 102;
+  int32 ordinal = 103;
+  int32 absolute_ordinal = 104;
+}
+
+message ParagraphStyle {
+  NamedStyleType named_style_type = 2;
+}
+
+message Paragraph {
+  repeated ParagraphElement elements = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  ParagraphStyle paragraph_style = 2; // evidence: live Android reportDoc
+  BulletInfo bullet_info = 4; // evidence: live Android reportDoc
+}
+
+message TableCell {
+  int32 start_index = 1;
+  int32 end_index = 2;
+  repeated StructuralElement content = 3;
+}
+
+message TableRow {
+  int32 start_index = 1;
+  int32 end_index = 2;
+  repeated TableCell table_cells = 3;
+}
+
+message Table {
+  int32 rows = 1;
+  int32 columns = 2;
+  repeated TableRow table_rows = 3;
+}
+
+message CodeBlock {
+  string content = 1;
+  string language_hint = 2;
+}
+
+message A2uiBlock {
+  string json = 1;
+}
+
+message Thought {
+  repeated StructuralElement elements = 1;
+}
+
+message HorizontalRule {}
+
+message StructuralElement {
+  int32 start_index = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  int32 end_index = 2; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  Paragraph paragraph = 3; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  Table table = 5; // evidence: live Android reportDoc
+  Image image = 6; // evidence: official APK exact TailwindDoc schema
+  CodeBlock code_block = 7; // evidence: official APK exact TailwindDoc schema
+  A2uiBlock a2ui_block = 8; // evidence: official APK exact TailwindDoc schema
+  Thought thought = 9; // evidence: official APK exact TailwindDoc schema
+  .google.internal.labs.tailwind.orchestration.v1.agency.FunctionCall function_call = 10; // evidence: official APK exact TailwindDoc schema
+  .google.internal.labs.tailwind.orchestration.v1.agency.FunctionResponse function_response = 11; // evidence: official APK exact TailwindDoc schema
+  HorizontalRule horizontal_rule = 12; // evidence: live Android reportDoc
+}
+
+message Body {
+  repeated StructuralElement content = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  repeated AnnotationMapEntry inline_object_locations = 2; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message TailwindDocFragment {
+  repeated StructuralElement elements = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message SourceRevision {
+  SourceId source = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message CitationSource {
+  SourceRevision ingested_source = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message Citation {
+  repeated Range ranges = 4; // evidence: current web bundle Citation encoder N_a
+  TailwindDocFragment fragment = 5; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  CitationSource source_attribution = 6; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  ObjectId object_id = 7; // retained only as a captured field; projection uses the enclosing id
+}
+
+message DocumentObject {
+  ObjectId object_id = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  Citation citation = 2; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message TailwindDoc {
+  Body body = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  repeated DocumentObject objects = 4; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  ResponseType type = 5; // evidence: official APK exact TailwindDoc schema
+}
+
+message AnswerResponse {
+  string response = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  ConversationTurnKey conversation_turn_key = 3; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  EmptyAnswerReason empty_answer_reason = 4; // exact archived APK schema; diagnostic only
+  TailwindDoc response_doc = 5; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message ActOnSourcesResponse {
+  AnswerResponse response = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  NextStepSuggestions next_step_suggestions = 6; // evidence: official APK exact schema
+}
+
+message ActOnSourcesMindMapContext {
+  string key = 1; // exact current Web constructor mGb field #1
+  string value = 2; // exact current Web constructor mGb field #2
+}
+
+message ActOnSourcesMindMapAction {
+  string action = 1; // exact current Web constructor qGb field #1
+  repeated ActOnSourcesMindMapContext context = 2; // exact current Web constructor qGb field #2
+  string language = 3; // exact current Web constructor qGb field #3
+}
+
+message ActOnSourcesOptions {
+  ContentType citation_content_type = 7; // exact APK ActOnSourcesOptions schema
+  ContentType answer_content_type = 10; // exact APK ActOnSourcesOptions schema
+}
+
+message FreeFormAction {
+  string user_query = 1;
+  repeated ConversationEvent conversation_history = 2;
+  string user_message_id = 3;
+}
+
+message InputSourceOptions {
+  string project_id = 1;
+  bool use_all_sources = 2;
+}
+
+message ActOnSourcesRequest {
+  repeated InputSource sources = 1; // exact APK request field #1
+  ActOnSourcesOptions options = 2; // exact APK request field #2
+  FreeFormAction free_form_action = 3; // exact APK request field #3
+  // Field #6 is omitted from the APK descriptor but exact in the current Web
+  // constructor and accepted by the same ActOnSources mobile gRPC method.
+  ActOnSourcesMindMapAction mind_map_action = 6;
+  InputSourceOptions source_options = 7; // exact APK request field #7
+  .labs.language.tailwind.common.protos.RequestContext request_context = 8; // exact APK request field #8
+  string chat_session_id = 10; // exact APK request field #10
+  QueryOrigin origin = 11; // exact APK request field #11
+}
+
+message ChatHistoryMessage {
+  string message_id = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  google.protobuf.Timestamp timestamp = 2; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  int32 observed_event_type = 3; // exact archive name; raw role value consumed by the base
+  string user_query_text = 4; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  ActOnSourcesResponse act_on_sources_response = 5; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message ListChatSessionsRequest {
+  string project_id = 3; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message ListChatSessionsResponse {
+  repeated .labs.language.tailwind.common.protos.ChatSession sessions = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+// #2303: live-verified on both front doors. The APK does not expose this
+// method, so the conventional message names are admitted as a Web-derived
+// overlay; the tag shapes are captured exactly.
+message GetChatSessionStatusRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1;
+  string chat_session_id = 2;
+}
+
+message GetChatSessionStatusResponse {
+  string generation_token = 1;
+  int32 status = 2; // 1 = idle; 2 = generating
+}
+
+// Exact 1.55.10 APK messages (see docs/android/schema.proto and #2303).
+message CancelGenerationRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1;
+  string chat_session_id = 2;
+  string agency_session_id = 3;
+}
+
+message CancelGenerationResponse {}
+
+message ListChatTurnsRequest {
+  string chat_session_id = 4; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  string page_token = 6; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message ListChatTurnsResponse {
+  repeated ChatHistoryMessage chat_turns = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  string next_page_token = 2; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message DeleteChatTurnsRequest {
+  string chat_session_id = 2; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  bool delete_all_history = 4; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message GenerateFreeFormStreamedRequest {
+  repeated InputSource sources = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  string user_query = 2; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  repeated ConversationEvent conversation_history = 3; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  .labs.language.tailwind.common.protos.RequestContext request_context = 4; // exact APK schema; WEB client type makes cancellation effective (#2303)
+  string chat_session_id = 5; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  string user_message_id = 6; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  string project_id = 8; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  QueryOrigin origin = 9; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+}
+
+message GenerateFreeFormStreamedResponse {
+  AnswerResponse answer = 1; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  bool is_final_response = 5; // evidence: docs/android/proto-evidence-ledger.md#chat-field-ledger
+  NextStepSuggestions next_step_suggestions = 6; // exact checked-in APK schema
+}
+
+// #2283: the standalone NextStepSuggestions RPC. Web-derived (not compiled into
+// the app); the reply is the exact NextStepSuggestions message. Declared here to
+// keep notebooks.proto (the exact APK-recovered file) free of web-derived
+// messages; chat.proto already imports sources.proto for InputSource.
+message NextStepSuggestionsRequest {
+  string project_id = 2; // evidence: docs/android/copy-append-suggestion-evidence.md#nextstepsuggestions
+  repeated InputSource sources = 3; // evidence: docs/android/copy-append-suggestion-evidence.md#nextstepsuggestions
+}

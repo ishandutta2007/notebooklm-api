@@ -1,0 +1,486 @@
+syntax = "proto3";
+
+package google.internal.labs.tailwind.orchestration.v1;
+
+import "google/internal/labs/tailwind/orchestration/v1/read.proto";
+import "google/internal/labs/tailwind/orchestration/v1/chat.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "labs/language/tailwind/common/protos/metadata.proto";
+
+// Exact-package artifact overlay. Every declaration below was checked for
+// FQN/name/tag/type/cardinality against the archived exact-package
+// supported.proto pinned in docs/android/proto-evidence-ledger.md. A nearby
+// schema.proto citation is corroborating Dart-symbol evidence, never the sole
+// authority for a Google-package declaration. The cumulative service in
+// orchestration_service.proto imports the implemented exact signatures; this
+// file provides only their reachable request/response closure.
+
+enum ArtifactType {
+  ARTIFACT_TYPE_UNKNOWN = 0;
+  ARTIFACT_TYPE_AUDIO_OVERVIEW = 1;
+  ARTIFACT_TYPE_TAILORED_REPORT = 2;
+  ARTIFACT_TYPE_EXPLAINER_VIDEO = 3;
+  ARTIFACT_TYPE_APP = 4;
+  ARTIFACT_TYPE_MINDMAP = 5;
+  ARTIFACT_TYPE_FANTASY_MAP = 6;
+  ARTIFACT_TYPE_INFOGRAPHIC = 7;
+  ARTIFACT_TYPE_SLIDES = 8;
+  ARTIFACT_TYPE_TABLE = 9;
+  ARTIFACT_TYPE_FILE = 10;
+}
+
+enum ArtifactStatus {
+  ARTIFACT_STATUS_UNKNOWN = 0;
+  ARTIFACT_STATUS_INITIALIZED = 1;
+  ARTIFACT_STATUS_PROCESSING = 2;
+  ARTIFACT_STATUS_READY = 3;
+  ARTIFACT_STATUS_FAILED = 4;
+  ARTIFACT_STATUS_SUGGESTED = 5;
+  ARTIFACT_PENDING_REVIEW = 6;
+}
+
+enum AppType {
+  APP_TYPE_UNSPECIFIED = 0;
+  APP_TYPE_FLASHCARDS = 1;
+  APP_TYPE_QUIZ = 2;
+  APP_TYPE_PROTOTYPE = 3;
+  APP_TYPE_MINDMAP = 4;
+  APP_TYPE_CANVAS = 5;
+}
+
+enum EpisodeLength {
+  EPISODE_LENGTH_UNSPECIFIED = 0;
+  EPISODE_LENGTH_SHORT = 1;
+  EPISODE_LENGTH_MEDIUM = 2;
+  EPISODE_LENGTH_LONG = 3;
+}
+
+enum MediaStreamingType {
+  MEDIA_STREAMING_TYPE_UNSPECIFIED = 0;
+  MEDIA_STREAMING_TYPE_PROGRESSIVE_STREAMING = 1;
+  MEDIA_STREAMING_TYPE_ADAPTIVE_STREAMING_HLS = 2;
+  MEDIA_STREAMING_TYPE_ADAPTIVE_STREAMING_DASH = 3;
+  MEDIA_STREAMING_TYPE_DOWNLOAD = 4;
+}
+
+enum VideoOverviewTemplateFormat {
+  TEMPLATE_FORMAT_UNSPECIFIED = 0;
+  TEMPLATE_FORMAT_EXPLAINER = 1;
+  TEMPLATE_FORMAT_BRIEF = 2;
+  TEMPLATE_FORMAT_BREAKDOWN = 3;
+  TEMPLATE_FORMAT_SHORT = 4;
+  TEMPLATE_FORMAT_WHITEBOARD_ANIMATION = 5;
+}
+
+enum VideoOverviewStyle {
+  VIDEO_OVERVIEW_STYLE_UNSPECIFIED = 0;
+  VIDEO_OVERVIEW_STYLE_AUTO_SELECT = 1;
+  VIDEO_OVERVIEW_STYLE_CLASSIC = 2;
+  VIDEO_OVERVIEW_STYLE_WHITEBOARD = 3;
+  VIDEO_OVERVIEW_STYLE_HERITAGE = 4;
+  VIDEO_OVERVIEW_STYLE_PAPERCRAFT = 5;
+  VIDEO_OVERVIEW_STYLE_WATERCOLOR = 6;
+  VIDEO_OVERVIEW_STYLE_ANIME = 7;
+  VIDEO_OVERVIEW_STYLE_RISOGRAPHIC = 8;
+  VIDEO_OVERVIEW_STYLE_KAWAII = 9;
+}
+
+enum DeckType {
+  DECK_TYPE_UNSPECIFIED = 0;
+  DECK_TYPE_READING = 1;
+  DECK_TYPE_PRESENTATION = 2;
+}
+
+enum SlideDeckLength {
+  SLIDE_DECK_LENGTH_UNSPECIFIED = 0;
+  SLIDE_DECK_LENGTH_DYNAMIC = 1;
+  SLIDE_DECK_LENGTH_SHORT = 2;
+  SLIDE_DECK_LENGTH_MEDIUM = 3;
+  SLIDE_DECK_LENGTH_LONG = 4;
+}
+
+message MediaStreamingUrl {
+  string url = 1; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+  MediaStreamingType type = 2; // evidence: docs/android/proto-evidence-ledger.md#artifact-exact-field-ledger
+}
+
+message QuizGenerationOptions {
+  enum QuestionQuantity {
+    QUESTION_QUANTITY_UNSPECIFIED = 0;
+    QUESTION_QUANTITY_FEWER = 1;
+    QUESTION_QUANTITY_STANDARD = 2;
+    QUESTION_QUANTITY_MORE = 3;
+  }
+
+  enum QuizDifficulty {
+    QUIZ_DIFFICULTY_UNSPECIFIED = 0;
+    QUIZ_DIFFICULTY_EASY = 1;
+    QUIZ_DIFFICULTY_MEDIUM = 2;
+    QUIZ_DIFFICULTY_HARD = 3;
+  }
+
+  QuestionQuantity question_quantity = 1; // evidence: docs/android/schema.proto QuizGenerationOptions
+  QuizDifficulty quiz_difficulty = 2; // evidence: docs/android/schema.proto QuizGenerationOptions
+}
+
+message FlashcardsGenerationOptions {
+  enum CardQuantity {
+    CARD_QUANTITY_UNSPECIFIED = 0;
+    CARD_QUANTITY_FEWER = 1;
+    CARD_QUANTITY_STANDARD = 2;
+    CARD_QUANTITY_MORE = 3;
+  }
+
+  enum FlashcardsDifficulty {
+    FLASHCARDS_DIFFICULTY_UNSPECIFIED = 0;
+    FLASHCARDS_DIFFICULTY_EASY = 1;
+    FLASHCARDS_DIFFICULTY_MEDIUM = 2;
+    FLASHCARDS_DIFFICULTY_HARD = 3;
+  }
+
+  CardQuantity card_quantity = 1;
+  FlashcardsDifficulty flashcards_difficulty = 2;
+}
+
+message AppArtifactGenerationOptions {
+  AppType app_type = 1; // evidence: docs/android/proto-evidence-ledger.md#artifact-exact-field-ledger
+  string free_text_steering_prompt = 3; // evidence: docs/android/schema.proto AppArtifactGenerationOptions
+  string language_code = 4; // evidence: exact-package supported.proto AppArtifactGenerationOptions
+  FlashcardsGenerationOptions flashcards_generation_options = 7; // evidence: exact-package supported.proto AppArtifactGenerationOptions
+  QuizGenerationOptions quiz_generation_options = 8; // evidence: docs/android/schema.proto AppArtifactGenerationOptions
+}
+
+message TemplatizedApp {
+  string app_data = 1; // evidence: official APK recovered TemplatizedApp schema
+}
+
+message AppArtifact {
+  string app_html = 1; // evidence: official APK recovered AppArtifact schema
+  AppArtifactGenerationOptions generation_options = 2; // evidence: docs/android/schema.proto AppArtifact
+  TemplatizedApp templatized_app = 3; // evidence: official APK recovered AppArtifact schema
+  string mind_map_json = 4; // evidence: live Android GetArtifact interactive-mind-map payload
+}
+
+message AudioOverviewGenerationOptions {
+  string episode_focus = 1; // evidence: exact-package supported.proto AudioOverviewGenerationOptions
+  EpisodeLength episode_length = 2; // evidence: exact-package supported.proto AudioOverviewGenerationOptions
+  repeated SourceId source_ids = 4; // evidence: exact-package supported.proto AudioOverviewGenerationOptions
+  string language_code = 5; // evidence: exact-package supported.proto AudioOverviewGenerationOptions
+}
+
+message AudioOverviewArtifact {
+  AudioOverviewGenerationOptions generation_options = 2; // evidence: exact-package supported.proto AudioOverviewArtifact
+  bool is_interactive = 5; // evidence: exact-package supported.proto AudioOverviewArtifact
+  repeated MediaStreamingUrl media_urls = 6; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+  google.protobuf.Duration duration = 7; // evidence: docs/android/schema.proto AudioOverviewArtifact
+}
+
+message ExplainerVideoGenerationOptions {
+  repeated SourceId source_ids = 1; // evidence: exact-package supported.proto ExplainerVideoGenerationOptions
+  string language_code = 2; // evidence: exact-package supported.proto ExplainerVideoGenerationOptions
+  string video_focus = 3; // evidence: docs/android/schema.proto ExplainerVideoGenerationOptions
+  VideoOverviewTemplateFormat template_format = 5; // evidence: exact-package supported.proto ExplainerVideoGenerationOptions
+  VideoOverviewStyle video_overview_style = 6; // evidence: exact-package supported.proto ExplainerVideoGenerationOptions
+  string style_prompt = 7; // evidence: exact-package supported.proto ExplainerVideoGenerationOptions
+}
+
+message ExplainerVideoArtifact {
+  ExplainerVideoGenerationOptions generation_options = 3; // evidence: docs/android/schema.proto ExplainerVideoArtifact
+  repeated MediaStreamingUrl media_urls = 5; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+  google.protobuf.Duration duration = 6; // evidence: docs/android/schema.proto ExplainerVideoArtifact
+}
+
+message TailoredReportArtifactGenerationOptions {
+  string type = 1; // evidence: docs/android/schema.proto TailoredReportArtifactGenerationOptions
+  string description = 2; // evidence: exact-package supported.proto TailoredReportArtifactGenerationOptions
+  repeated SourceId source_ids = 4; // evidence: exact-package supported.proto TailoredReportArtifactGenerationOptions
+  string language_code = 5; // evidence: exact-package supported.proto TailoredReportArtifactGenerationOptions
+  string document_directive = 6; // evidence: docs/android/schema.proto TailoredReportArtifactGenerationOptions
+}
+
+message TailoredReportArtifact {
+  TailoredReportArtifactGenerationOptions generation_options = 2; // evidence: docs/android/schema.proto TailoredReportArtifact
+  TailwindDoc report_doc = 3; // evidence: official APK recovered TailoredReportArtifact schema
+}
+
+message ServedImage {
+  string url = 1; // evidence: docs/android/schema.proto ServedImage
+}
+
+message InfographicGenerationOptions {
+  enum AspectRatio {
+    ASPECT_RATIO_UNSPECIFIED = 0;
+    ASPECT_RATIO_LANDSCAPE = 1;
+    ASPECT_RATIO_PORTRAIT = 2;
+    ASPECT_RATIO_SQUARE = 3;
+  }
+
+  enum InfographicStyle {
+    STYLE_UNSPECIFIED = 0;
+    STYLE_AUTO = 1;
+    STYLE_SKETCH_NOTE = 2;
+    STYLE_PROFESSIONAL = 3;
+    STYLE_BENTO_GRID = 4;
+    STYLE_EDITORIAL = 5;
+    STYLE_STORYBOARD = 6;
+    STYLE_BRICKS = 7;
+    STYLE_CLAYMATION = 8;
+    STYLE_ANIME = 9;
+    STYLE_KAWAII = 10;
+    STYLE_SCIENTIFIC = 11;
+    STYLE_ACADEMIC = 12;
+  }
+
+  string user_steering_prompt = 1; // evidence: docs/android/schema.proto InfographicGenerationOptions
+  string language_code = 2; // evidence: exact-package supported.proto InfographicGenerationOptions
+  AspectRatio aspect_ratio = 4; // evidence: exact-package supported.proto InfographicGenerationOptions
+  InfographicStyle style = 6; // evidence: exact-package supported.proto InfographicGenerationOptions
+}
+
+message Infographic {
+  string title = 1; // evidence: docs/android/schema.proto Infographic
+  ServedImage image = 2; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+}
+
+message InfographicArtifact {
+  InfographicGenerationOptions generation_options = 1; // evidence: docs/android/schema.proto InfographicArtifact
+  repeated Infographic infographics = 3; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+}
+
+message SlidesGenerationOptions {
+  string user_steering_prompt = 1; // evidence: docs/android/schema.proto SlidesGenerationOptions
+  string language_code = 2; // evidence: exact-package supported.proto SlidesGenerationOptions
+  DeckType deck_type = 3; // evidence: exact-package supported.proto SlidesGenerationOptions
+  SlideDeckLength length = 4; // evidence: exact-package supported.proto SlidesGenerationOptions
+}
+
+message Slide {
+  ServedImage image = 1; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+}
+
+message SlidesArtifact {
+  SlidesGenerationOptions generation_options = 1; // evidence: docs/android/schema.proto SlidesArtifact
+  repeated Slide slides = 3; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+  string pdf_download_url = 4; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+  string pptx_download_url = 5; // evidence: official APK recovered SlidesArtifact schema
+}
+
+message SlideEditInstruction {
+  int32 slide_index = 1; // evidence: official APK deriveSlidesArtifact AOT implementation
+  string edit_instruction = 2; // evidence: official APK deriveSlidesArtifact AOT implementation
+}
+
+message SlidesDerivationOptions {
+  repeated SlideEditInstruction slide_edit_instructions = 1; // evidence: official APK deriveSlidesArtifact AOT implementation
+}
+
+message FileArtifact {
+  string file_name = 1; // evidence: official APK recovered FileArtifact schema
+  string mime_type = 2; // evidence: official APK recovered FileArtifact schema
+  string file_preview_url = 3; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+  string file_download_url = 4; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+}
+
+message AudioOverviewState {
+  google.protobuf.Duration playback_position = 1; // evidence: exact-package supported.proto AudioOverviewState
+}
+
+message VideoOverviewState {}
+
+message AppArtifactState {
+  google.protobuf.Struct app_state = 1; // evidence: exact-package supported.proto AppArtifactState
+}
+
+message ScheduledNotificationConfig {}
+
+message ArtifactState {
+  AudioOverviewState audio_overview_state = 1; // evidence: exact-package supported.proto ArtifactState
+  VideoOverviewState video_overview_state = 2; // evidence: exact-package supported.proto ArtifactState
+  AppArtifactState app_artifact_state = 3; // evidence: exact-package supported.proto ArtifactState
+  repeated ScheduledNotificationConfig scheduled_notification_configs = 4; // evidence: exact-package supported.proto ArtifactState
+}
+
+message ArtifactSource {
+  SourceId source_id = 1; // evidence: docs/android/schema.proto ArtifactSource
+}
+
+message Artifact {
+  string artifact_id = 1; // evidence: docs/android/schema.proto Artifact
+  string title = 2; // evidence: docs/android/schema.proto Artifact
+  ArtifactType type = 3; // evidence: docs/android/schema.proto Artifact
+  repeated ArtifactSource sources = 4; // evidence: docs/android/schema.proto Artifact
+  ArtifactStatus status = 5; // evidence: docs/android/schema.proto Artifact
+  AudioOverviewArtifact audio_overview = 7; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+  TailoredReportArtifact tailored_report = 8; // evidence: docs/android/schema.proto Artifact
+  ExplainerVideoArtifact explainer_video = 9; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+  AppArtifact app = 10; // evidence: docs/android/schema.proto Artifact
+  google.protobuf.Timestamp last_modified_timestamp = 11; // evidence: docs/android/schema.proto Artifact
+  InfographicArtifact infographic = 15; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+  SlidesArtifact slides = 17; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+  ArtifactState artifact_user_state = 18; // evidence: exact-package supported.proto Artifact
+  string etag = 22; // evidence: docs/android/grpc-capability-and-signature-evidence.md#apk-present-destructive-validation-on-the-copy
+  FileArtifact file = 25; // evidence: docs/android/file-transfer-evidence.md#1-list-and-select-a-ready-representation
+}
+
+message CreateArtifactRequest {
+  string project_id = 2; // evidence: docs/android/endpoints.md#createartifact--generate-a-studio-artifact
+  Artifact artifact = 3; // evidence: docs/android/endpoints.md#createartifact--generate-a-studio-artifact
+}
+
+message CreateArtifactResponse {
+  Artifact artifact = 1; // evidence: docs/android/endpoints.md#createartifact--generate-a-studio-artifact
+}
+
+// Conventional type names from the current web registration. The wire fields
+// and mobile routes are live-pinned; these methods are absent from the APK.
+message GenerateArtifactRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1;
+  string artifact_id = 2;
+}
+
+message GenerateArtifactResponse {
+  Artifact artifact = 1;
+}
+
+message ExportToDriveRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1;
+  oneof target {
+    string artifact_id = 2;
+    string content = 3;
+  }
+  string title = 4;
+  int32 destination = 5; // 1 = Docs, 2 = Sheets
+}
+
+message ExportToDriveResponse {
+  string url = 1;
+}
+
+message DeriveArtifactRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1; // evidence: official APK recovered DeriveArtifactRequest schema
+  string original_artifact_id = 2; // evidence: official APK recovered DeriveArtifactRequest schema
+  SlidesDerivationOptions slides_derivation_options = 3; // evidence: official APK recovered DeriveArtifactRequest schema
+}
+
+message DeriveArtifactResponse {
+  Artifact artifact = 1; // evidence: official APK recovered DeriveArtifactResponse schema
+}
+
+message GetArtifactRequest {
+  string artifact_id = 1; // evidence: docs/android/endpoints.md#getartifact--generatedocumentguides
+}
+
+message GetArtifactResponse {
+  Artifact artifact = 1; // evidence: docs/android/endpoints.md#getartifact--generatedocumentguides
+}
+
+message ListArtifactsRequest {
+  string project_id = 2; // evidence: docs/android/endpoints.md#listartifacts
+}
+
+message ListArtifactsResponse {
+  repeated Artifact artifacts = 1; // evidence: docs/android/endpoints.md#listartifacts
+}
+
+message UpdateArtifactRequest {
+  Artifact artifact = 1; // evidence: docs/android/grpc-capability-and-signature-evidence.md#apk-present-destructive-validation-on-the-copy
+  google.protobuf.FieldMask update_mask = 2; // evidence: docs/android/schema.proto UpdateArtifactRequest
+  string etag = 3; // evidence: docs/android/schema.proto UpdateArtifactRequest
+}
+
+message DeleteArtifactRequest {
+  string artifact_id = 2; // evidence: docs/android/schema.proto DeleteArtifactRequest
+}
+
+// Web-derived ciyUvf -> GenerateReportSuggestions closure. The method and
+// conventional request/response names come from the current bundle registry;
+// tags and cardinality are pinned by a successful Android-bearer response.
+message GenerateReportSuggestionsRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1;
+  string project_id = 2;
+  repeated SourceId source_ids = 3;
+}
+
+message ReportSuggestion {
+  string title = 1;
+  string description = 2;
+  repeated SourceId source_ids = 4;
+  string prompt = 5;
+  int32 audience_level = 6;
+}
+
+message GenerateReportSuggestionsResponse {
+  repeated ReportSuggestion suggestions = 1;
+}
+
+// ---------------------------------------------------------------------------
+// #2283: CopyArtifactsAsync (web-derived; not compiled into the app) and
+// GetArtifactCustomizationChoices (compiled into the app; request/response
+// FQNs exact). Tag layouts pinned by successful live Android gRPC calls
+// (2026-09-01).
+// ---------------------------------------------------------------------------
+
+message CopyArtifactsAsyncRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1; // evidence: docs/android/copy-append-suggestion-evidence.md#copyartifactsasync
+  repeated string artifact_ids = 2; // evidence: docs/android/copy-append-suggestion-evidence.md#copyartifactsasync
+  string target_project_id = 3; // evidence: docs/android/copy-append-suggestion-evidence.md#copyartifactsasync
+}
+
+message CopiedArtifact {
+  string source_artifact_id = 1; // evidence: docs/android/copy-append-suggestion-evidence.md#copyartifactsasync
+  Artifact artifact = 2; // evidence: docs/android/copy-append-suggestion-evidence.md#copyartifactsasync
+}
+
+message CopyArtifactsAsyncResponse {
+  repeated CopiedArtifact copied_artifacts = 1; // evidence: docs/android/copy-append-suggestion-evidence.md#copyartifactsasync
+}
+
+message GetArtifactCustomizationChoicesRequest {
+  .labs.language.tailwind.common.protos.RequestContext request_context = 1; // evidence: docs/android/schema.proto GetArtifactCustomizationChoicesRequest
+  string project_id = 2; // evidence: docs/android/schema.proto GetArtifactCustomizationChoicesRequest
+  ArtifactType artifact_type = 3; // evidence: docs/android/schema.proto GetArtifactCustomizationChoicesRequest
+}
+
+message FormatChoice {
+  int32 format = 1; // evidence: docs/android/copy-append-suggestion-evidence.md#getartifactcustomizationchoices
+  string title = 2; // evidence: docs/android/copy-append-suggestion-evidence.md#getartifactcustomizationchoices
+  string description = 3; // evidence: docs/android/copy-append-suggestion-evidence.md#getartifactcustomizationchoices
+}
+
+message FormatChoices {
+  repeated FormatChoice choices = 1; // evidence: docs/android/copy-append-suggestion-evidence.md#getartifactcustomizationchoices
+}
+
+message SlidesType {
+  DeckType deck_type = 1; // evidence: docs/android/schema.proto SlidesType
+  string title = 2; // evidence: docs/android/schema.proto SlidesType
+  string description = 3; // evidence: docs/android/schema.proto SlidesType
+}
+
+message SlidesCustomizationChoices {
+  repeated SlidesType types = 1; // evidence: docs/android/schema.proto SlidesCustomizationChoices
+}
+
+message TailoredReportTypeOption {
+  string report_type = 1; // evidence: docs/android/schema.proto TailoredReportTypeOption
+  string report_description = 2; // evidence: docs/android/schema.proto TailoredReportTypeOption
+  string report_directive = 3; // evidence: docs/android/schema.proto TailoredReportTypeOption
+}
+
+message TailoredReportCustomizationChoices {
+  repeated TailoredReportTypeOption report_type_options = 1; // evidence: docs/android/schema.proto TailoredReportCustomizationChoices
+}
+
+message ArtifactCustomizationChoices {
+  FormatChoices audio_overview_choices = 1; // evidence: docs/android/copy-append-suggestion-evidence.md#getartifactcustomizationchoices (live-only; not in the APK schema)
+  FormatChoices video_overview_choices = 2; // evidence: docs/android/copy-append-suggestion-evidence.md#getartifactcustomizationchoices (live-only; not in the APK schema)
+  SlidesCustomizationChoices slides_customization_choices = 3; // evidence: docs/android/schema.proto ArtifactCustomizationChoices
+  TailoredReportCustomizationChoices tailored_report_customization_choices = 4; // evidence: docs/android/schema.proto ArtifactCustomizationChoices
+}
+
+message GetArtifactCustomizationChoicesResponse {
+  ArtifactCustomizationChoices artifact_customization_choices = 1; // evidence: docs/android/schema.proto GetArtifactCustomizationChoicesResponse
+}
