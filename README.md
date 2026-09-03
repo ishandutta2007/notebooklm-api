@@ -1,8 +1,5 @@
 # 🚀 open-notebooklm — Unofficial Google NotebookLM API, Python SDK, CLI & MCP Server for Gemini Notebook Automation
 
-<p align="center">
-  <img src="notebooklm-py.png" alt="open-notebooklm — Open-Source Google NotebookLM API Python SDK, CLI, MCP Server & AI Agent Toolkit" width="160">
-</p>
 
 <h3 align="center">
   The #1 Open-Source Google NotebookLM API, Python SDK, CLI & MCP Server<br>
