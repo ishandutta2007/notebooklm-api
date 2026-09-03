@@ -17,11 +17,11 @@
 
 <p align="center">
   <a href="https://github.com/ishandutta2007/Awesome-Awesome-Awesome"><img src="https://img.shields.io/badge/Awesome-%E2%9C%94-blueviolet?style=flat-square&logo=github" alt="Awesome"/></a><a href="https://discord.gg/jc4xtF58Ve"><img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord" /></a>
-  <a href="https://pypi.org/project/notebooklm-py/"><img src="https://img.shields.io/pypi/v/notebooklm-py.svg?style=for-the-badge&color=blue" alt="open-notebooklm PyPI version"></a>
-  <a href="https://pypi.org/project/notebooklm-py/"><img src="https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue?style=for-the-badge" alt="Python 3.10 3.11 3.12 3.13 3.14"></a>
+  <a href="https://pypi.org/project/notebooklm-api/"><img src="https://img.shields.io/pypi/v/notebooklm-api.svg?style=for-the-badge&color=blue" alt="open-notebooklm PyPI version"></a>
+  <a href="https://pypi.org/project/notebooklm-api/"><img src="https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue?style=for-the-badge" alt="Python 3.10 3.11 3.12 3.13 3.14"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License: MIT"></a>
   <a href="https://github.com/ishandutta2007/open-notebooklm/stargazers"><img src="https://img.shields.io/github/stars/ishandutta2007/open-notebooklm?style=for-the-badge&color=orange" alt="GitHub Stars"></a>
-  <a href="https://pepy.tech/project/notebooklm-py"><img src="https://img.shields.io/pepy/dt/notebooklm-py?style=for-the-badge&color=green" alt="PyPI Downloads"></a>
+  <a href="https://pepy.tech/project/notebooklm-api"><img src="https://img.shields.io/pepy/dt/notebooklm-api?style=for-the-badge&color=green" alt="PyPI Downloads"></a>
   <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-Compatible-purple?style=for-the-badge" alt="Model Context Protocol Compatible"></a>
   <a href="https://github.com/ishandutta2007"><img alt="GitHub followers" src="https://img.shields.io/github/followers/ishandutta2007?label=Follow" /></a>
 </p>
@@ -191,7 +191,7 @@ All 11 public API namespaces are available on the Android transport. See the [An
 
 ```bash
 # Recommended: isolated install via uv tool (or pipx)
-uv tool install "notebooklm-py[browser]"
+uv tool install "notebooklm-api[browser]"
 
 # Authenticate (opens Chromium for Google sign-in)
 notebooklm login
@@ -200,19 +200,19 @@ notebooklm login
 notebooklm auth check --test --json
 ```
 
-> 💡 **Why `uv tool` / `pipx`?** They install `notebooklm` into its own isolated environment on your `PATH` — no dependency clashes, one-line upgrade (`uv tool upgrade notebooklm-py`), and they work on modern macOS / Debian / Ubuntu where system-wide `pip install` is blocked ([PEP 668](https://peps.python.org/pep-0668/)). No `uv` yet? `curl -LsSf https://astral.sh/uv/install.sh | sh`.
+> 💡 **Why `uv tool` / `pipx`?** They install `notebooklm` into its own isolated environment on your `PATH` — no dependency clashes, one-line upgrade (`uv tool upgrade notebooklm-api`), and they work on modern macOS / Debian / Ubuntu where system-wide `pip install` is blocked ([PEP 668](https://peps.python.org/pep-0668/)). No `uv` yet? `curl -LsSf https://astral.sh/uv/install.sh | sh`.
 
 **Prefer plain `pip`?** Works fine inside a virtualenv:
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install "notebooklm-py[browser]"
+pip install "notebooklm-api[browser]"
 ```
 
 **As a library** (no Playwright, no Chromium):
 
 ```bash
-pip install notebooklm-py
+pip install notebooklm-api
 ```
 
 ### 🔐 Authentication & Access
