@@ -1,6 +1,6 @@
 # Contributing to open-notebooklm
 
-Thank you for contributing to **open-notebooklm** (`notebooklm-py` on PyPI)! We welcome bug fixes, documentation improvements, feature additions, and performance enhancements.
+Thank you for contributing to **open-notebooklm** (`notebooklm-api` on PyPI)! We welcome bug fixes, documentation improvements, feature additions, and performance enhancements.
 
 This guide covers everything you need to set up your environment, follow coding and architecture conventions, run the multi-tiered test suite, and submit pull requests that pass all merge gates.
 
