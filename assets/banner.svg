@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19" />
+      <stop offset="50%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#080c14" />
+    </linearGradient>
+
+    <!-- Accent Gradients -->
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#818cf8" />
+      <stop offset="100%" stop-color="#c084fc" />
+    </linearGradient>
+
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.08)" />
+      <stop offset="100%" stop-color="rgba(255, 255, 255, 0.02)" />
+    </linearGradient>
+
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="25" result="blur" />
+    </filter>
+  </defs>
+
+  <style>
+    .title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-weight: 800;
+      font-size: 52px;
+      fill: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    .subtitle {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      fill: #94a3b8;
+    }
+    .tag {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 600;
+      fill: #38bdf8;
+    }
+    .badge-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      fill: #e2e8f0;
+    }
+
+    /* Dynamic CSS Keyframe Animations */
+    @keyframes pulseOrb {
+      0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.45; }
+      50% { transform: scale(1.15) translate(15px, -10px); opacity: 0.75; }
+    }
+    @keyframes floatParticle {
+      0%, 100% { transform: translateY(0px) scale(1); opacity: 0.4; }
+      50% { transform: translateY(-16px) scale(1.3); opacity: 0.9; }
+    }
+    @keyframes dashStream {
+      to { stroke-dashoffset: -100; }
+    }
+    @keyframes rotateRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .orb-anim-1 { animation: pulseOrb 8s ease-in-out infinite; transform-origin: 200px 100px; }
+    .orb-anim-2 { animation: pulseOrb 10s ease-in-out infinite reverse; transform-origin: 1050px 220px; }
+    .float-p1 { animation: floatParticle 4s ease-in-out infinite; }
+    .float-p2 { animation: floatParticle 5s ease-in-out infinite 1.5s; }
+    .float-p3 { animation: floatParticle 3.5s ease-in-out infinite 0.7s; }
+    .float-p4 { animation: floatParticle 6s ease-in-out infinite 2s; }
+    .data-line { stroke-dasharray: 6, 8; animation: dashStream 5s linear infinite; }
+    .orbit-spin { animation: rotateRing 25s linear infinite; transform-origin: 1030px 160px; }
+  </style>
+
+  <!-- Deep Background -->
+  <rect width="1200" height="360" rx="16" fill="url(#bgGrad)" />
+
+  <!-- Grid Pattern Overlay -->
+  <g opacity="0.08" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="60" x2="1200" y2="60" />
+    <line x1="0" y1="120" x2="1200" y2="120" />
+    <line x1="0" y1="180" x2="1200" y2="180" />
+    <line x1="0" y1="240" x2="1200" y2="240" />
+    <line x1="0" y1="300" x2="1200" y2="300" />
+    <line x1="120" y1="0" x2="120" y2="360" />
+    <line x1="240" y1="0" x2="240" y2="360" />
+    <line x1="360" y1="0" x2="360" y2="360" />
+    <line x1="480" y1="0" x2="480" y2="360" />
+    <line x1="600" y1="0" x2="600" y2="360" />
+    <line x1="720" y1="0" x2="720" y2="360" />
+    <line x1="840" y1="0" x2="840" y2="360" />
+    <line x1="960" y1="0" x2="960" y2="360" />
+    <line x1="1080" y1="0" x2="1080" y2="360" />
+  </g>
+
+  <!-- Dynamic Glowing Orbs -->
+  <circle cx="200" cy="90" r="140" fill="#4338ca" filter="url(#softGlow)" class="orb-anim-1" />
+  <circle cx="1040" cy="200" r="150" fill="#a855f7" filter="url(#softGlow)" class="orb-anim-2" />
+  <circle cx="600" cy="280" r="110" fill="#0284c7" filter="url(#softGlow)" class="orb-anim-1" />
+
+  <!-- Animated Ambient Data Lines -->
+  <path d="M 60 290 Q 300 230, 600 260 T 1140 220" fill="none" stroke="url(#primaryGrad)" stroke-width="1.8" opacity="0.35" class="data-line" />
+  <path d="M 100 80 Q 450 140, 800 90 T 1120 130" fill="none" stroke="#38bdf8" stroke-width="1.2" opacity="0.25" class="data-line" />
+
+  <!-- Floating Glowing Particles -->
+  <circle cx="160" cy="140" r="3" fill="#38bdf8" class="float-p1" />
+  <circle cx="480" cy="80" r="2.5" fill="#818cf8" class="float-p2" />
+  <circle cx="720" cy="250" r="3.5" fill="#c084fc" class="float-p3" />
+  <circle cx="940" cy="100" r="2" fill="#38bdf8" class="float-p4" />
+  <circle cx="1110" cy="290" r="3" fill="#f43f5e" class="float-p1" />
+
+  <!-- Brand Pill -->
+  <g transform="translate(80, 52)">
+    <rect width="320" height="34" rx="17" fill="rgba(56, 189, 248, 0.12)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1" />
+    <circle cx="18" cy="17" r="5" fill="#38bdf8">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <text x="32" y="22" class="tag">⚡ GOOGLE NOTEBOOKLM &amp; GEMINI</text>
+  </g>
+
+  <!-- Main Hero Title -->
+  <g transform="translate(80, 142)">
+    <text class="title">
+      open-notebooklm
+      <tspan fill="url(#primaryGrad)">.py</tspan>
+    </text>
+  </g>
+
+  <!-- Tagline / Value Proposition -->
+  <g transform="translate(80, 182)">
+    <text class="subtitle">
+      The Unofficial Python SDK, CLI &amp; FastMCP Server for Gemini Notebook
+    </text>
+  </g>
+  <g transform="translate(80, 210)">
+    <text class="subtitle" font-size="16px" fill="#64748b">
+      Autonomous Agentic RAG · AI Podcasts &amp; Slides · Grounded Multi-Source Synthesis
+    </text>
+  </g>
+
+  <!-- Feature Chip Row -->
+  <g transform="translate(80, 254)">
+    <!-- Chip 1 -->
+    <g transform="translate(0, 0)">
+      <rect width="130" height="38" rx="10" fill="url(#cardGrad)" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1" />
+      <text x="14" y="24" class="badge-text">🐍 Python SDK</text>
+    </g>
+    <!-- Chip 2 -->
+    <g transform="translate(142, 0)">
+      <rect width="145" height="38" rx="10" fill="url(#cardGrad)" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1" />
+      <text x="14" y="24" class="badge-text">🔌 FastMCP Server</text>
+    </g>
+    <!-- Chip 3 -->
+    <g transform="translate(299, 0)">
+      <rect width="135" height="38" rx="10" fill="url(#cardGrad)" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1" />
+      <text x="14" y="24" class="badge-text">🎙️ AI Podcasts</text>
+    </g>
+    <!-- Chip 4 -->
+    <g transform="translate(446, 0)">
+      <rect width="145" height="38" rx="10" fill="url(#cardGrad)" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1" />
+      <text x="14" y="24" class="badge-text">🧠 Agentic RAG</text>
+    </g>
+    <!-- Chip 5 -->
+    <g transform="translate(603, 0)">
+      <rect width="130" height="38" rx="10" fill="url(#cardGrad)" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1" />
+      <text x="14" y="24" class="badge-text">⚡ 50+ CLI Ops</text>
+    </g>
+  </g>
+
+  <!-- Right Hero Diagram / Visual Graphic -->
+  <g transform="translate(1000, 160)">
+    <!-- Rotating Ring -->
+    <g class="orbit-spin">
+      <circle cx="30" cy="0" r="95" fill="none" stroke="rgba(129, 140, 248, 0.25)" stroke-width="1.5" stroke-dasharray="8, 12" />
+      <circle cx="125" cy="0" r="6" fill="#38bdf8" filter="url(#glow)" />
+      <circle cx="-65" cy="0" r="5" fill="#c084fc" filter="url(#glow)" />
+    </g>
+    <!-- Inner Glow Core -->
+    <circle cx="30" cy="0" r="55" fill="url(#glowGrad)" />
+    <circle cx="30" cy="0" r="42" fill="#1e1b4b" stroke="rgba(168, 85, 247, 0.5)" stroke-width="2" />
+    <!-- Center Notebook/Gemini Sparkle -->
+    <path d="M 30 -18 Q 30 0, 48 0 Q 30 0, 30 18 Q 30 0, 12 0 Q 30 0, 30 -18 Z" fill="url(#primaryGrad)" filter="url(#glow)">
+      <animate attributeName="transform" type="scale" values="1;1.2;1" dur="3s" repeatCount="indefinite" transform-origin="30 0" />
+    </path>
+    <circle cx="30" cy="0" r="3" fill="#ffffff" />
+  </g>
+
+  <!-- Outer Border Stroke -->
+  <rect width="1200" height="360" rx="16" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1.5" />
+</svg>

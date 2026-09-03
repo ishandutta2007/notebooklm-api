@@ -12,12 +12,18 @@
 </p>
 
 <p align="center">
+  <img src="assets/banner.svg" alt="open-notebooklm Banner" width="100%">
+</p>
+
+<p align="center">
+  <a href="https://github.com/ishandutta2007/Awesome-Awesome-Awesome"><img src="https://img.shields.io/badge/Awesome-%E2%9C%94-blueviolet?style=flat-square&logo=github" alt="Awesome"/></a><a href="https://discord.gg/jc4xtF58Ve"><img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord" /></a>
   <a href="https://pypi.org/project/notebooklm-py/"><img src="https://img.shields.io/pypi/v/notebooklm-py.svg?style=for-the-badge&color=blue" alt="open-notebooklm PyPI version"></a>
   <a href="https://pypi.org/project/notebooklm-py/"><img src="https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue?style=for-the-badge" alt="Python 3.10 3.11 3.12 3.13 3.14"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License: MIT"></a>
   <a href="https://github.com/ishandutta2007/open-notebooklm/stargazers"><img src="https://img.shields.io/github/stars/ishandutta2007/open-notebooklm?style=for-the-badge&color=orange" alt="GitHub Stars"></a>
   <a href="https://pepy.tech/project/notebooklm-py"><img src="https://img.shields.io/pepy/dt/notebooklm-py?style=for-the-badge&color=green" alt="PyPI Downloads"></a>
   <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-Compatible-purple?style=for-the-badge" alt="Model Context Protocol Compatible"></a>
+  <a href="https://github.com/ishandutta2007"><img alt="GitHub followers" src="https://img.shields.io/github/followers/ishandutta2007?label=Follow" /></a>
 </p>
 
 <p align="center">
@@ -50,6 +56,7 @@
 - [💡 Use Cases & Recipes — What People Build with open-notebooklm](#-use-cases--recipes--what-people-build-with-open-notebooklm)
 - [🔍 Key Capabilities & Search Terms](#-key-capabilities--search-terms)
 - [📚 Documentation Index](#-documentation-index)
+- [⭐ Star History](#-star-history)
 - [📜 License](#-license)
 
 ---
@@ -429,6 +436,12 @@ If you are looking for any of the following solutions, **open-notebooklm** provi
 | 📋 **[Changelog](CHANGELOG.md)** | Version history and release notes |
 | 🔐 **[Security Policy](SECURITY.md)** | Vulnerability reporting |
 | 🤝 **[Contributing](CONTRIBUTING.md)** | How to contribute, run tests, format code |
+
+---
+
+## ⭐ Star History
+
+[![Star History Chart](https://star-history.dera.page/svg?repos=ishandutta2007/open-notebooklm3&type=date&legend=top-left)](https://star-history.dera.page/#ishandutta2007/open-notebooklm3&type=date&legend=top-left)
 
 ---
 
