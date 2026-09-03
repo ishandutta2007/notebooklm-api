@@ -41,7 +41,7 @@ Issues = "https://github.com/ishandutta2007/open-notebooklm/issues"
 
 [project.optional-dependencies]
 markdown = ["markdownify>=0.14.1,<2"]
-browser = ["playwright>=1.40.0,<2"]
+browser = ["playwright>=1.62.0,<2"]
 cookies = ["rookie-cookies>=0.1.0,<1"]
 # EXPERIMENTAL / PoC: optional curl_cffi transport for browser TLS-JA3
 # impersonation (NOTEBOOKLM_TRANSPORT=curl_cffi). Native wheels, so excluded from
