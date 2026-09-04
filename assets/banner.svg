@@ -138,7 +138,7 @@
   <!-- Main Hero Title -->
   <g transform="translate(80, 142)">
     <text class="title">
-      open-notebooklm
+      Notebooklm
       <tspan fill="url(#primaryGrad)">.py</tspan>
     </text>
   </g>
