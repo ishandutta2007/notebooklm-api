@@ -41,7 +41,7 @@ def test_build_server_block_uses_uvx() -> None:
     block = build_server_block()
     assert block == {
         "command": "uvx",
-        "args": ["--from", "notebooklm-py[mcp]", "notebooklm-mcp"],
+        "args": ["--from", "notebooklm-api[mcp]", "notebooklm-mcp"],
     }
     # A fresh dict each call — callers mutate/merge freely.
     assert build_server_block() is not block

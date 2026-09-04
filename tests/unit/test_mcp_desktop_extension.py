@@ -252,7 +252,7 @@ def test_build_command_stable_version_stays_unpinned() -> None:
     """A stable bundle stays unpinned so it tracks the latest stable server."""
     run_server = _load_run_server()
     cmd = run_server.build_command("/opt/uvx", [], "0.8.0")
-    assert cmd == ["/opt/uvx", "--from", "notebooklm-py[mcp]", "notebooklm-mcp"]
+    assert cmd == ["/opt/uvx", "--from", "notebooklm-api[mcp]", "notebooklm-mcp"]
 
 
 def test_bundle_version_matches_manifest() -> None:

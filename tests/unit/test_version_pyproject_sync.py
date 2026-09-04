@@ -26,3 +26,10 @@ def test_version_matches_pyproject() -> None:
     pyproject = Path(__file__).resolve().parents[2] / "pyproject.toml"
     parsed = tomllib.loads(pyproject.read_text("utf-8"))
     assert notebooklm.__version__ == parsed["project"]["version"]
+
+
+def test_package_name_matches_pyproject() -> None:
+    pyproject = Path(__file__).resolve().parents[2] / "pyproject.toml"
+    parsed = tomllib.loads(pyproject.read_text("utf-8"))
+    assert parsed["project"]["name"] == "notebooklm-api"
+    assert parsed["project"]["version"] == "0.1.0"
